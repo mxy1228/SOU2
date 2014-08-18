@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.xmy.sou"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="11"
+        android:targetSdkVersion="16" />
+
+    <application
+        android:name="com.xmy.sou.SouApplication"
+        android:allowBackup="true"
+        android:icon="@drawable/icon"
+        android:label="@string/app_name"
+        android:theme="@android:style/Theme.Holo.Light" >
+        <activity
+            android:name="com.xmy.sou.view.MainActivity"
+            android:windowSoftInputMode="adjustResize">
+        </activity>
+        <activity android:name=".view.LanchActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <service android:name=".service.XiaomiCloudSyncService"></service>
+        <activity
+            android:name="com.xiaomi.channel.openauth.AuthorizeActivity"
+            android:configChanges="orientation"
+            android:windowSoftInputMode="stateHidden">
+             <intent-filter>
+                <action android:name="com.xiaomi.openauth.action.AUTH"/>                
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+          </activity>
+          
+        <receiver android:name=".receiver.AppInstallReceiver">
+            <intent-filter >
+                <action android:name="android.intent.action.PACKAGE_ADDED"/>
+                <action android:name="android.intent.action.PACKAGE_REPLACED"/>
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+        
+        <receiver android:name=".receiver.AppUnistallReceiver">
+            <intent-filter >
+                <action android:name="android.intent.action.PACKAGE_REMOVED"/>
+                <data android:scheme="package" />
+            </intent-filter>
+        </receiver>
+    </application>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW"/>
+</manifest>
