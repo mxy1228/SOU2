@@ -11,8 +11,6 @@ import android.widget.TextView;
 import com.xmy.event.SaveAppEvent;
 import com.xmy.sou.R;
 import com.xmy.sou.db.AppDao;
-import com.xmy.sou.log.SLog;
-import com.xmy.sou.service.XiaomiCloudSyncService;
 import com.xmy.sou.view.cts.LanchProgressView;
 
 import de.greenrobot.event.EventBus;
@@ -52,10 +50,6 @@ public class LanchActivity extends BaseActivity {
 	    		, RelativeLayout.LayoutParams.WRAP_CONTENT);
 	    lp.addRule(RelativeLayout.CENTER_IN_PARENT);
 	    progressView.setLayoutParams(lp);
-//	    CYMGFlowWindow win = new CYMGFlowWindow(this);
-//	    win.show();
-//	    mFloatView = new FloatView(this);
-//	    mFloatView.show();
 	    this.mContainerRL.addView(progressView);
 	}
 
@@ -98,7 +92,6 @@ public class LanchActivity extends BaseActivity {
 	    int rate = (int)(event.getRate() * 100);
 	    this.mRateTV.setText(rate + "%");
 	    if(rate == 100){
-//	    	AuthorizeHelper.startAuthorizeActivityForResultByTokenType(this, Contants.XIAOMI_APP_ID, "http://127.0.0.1:8080/demo", null, null);
 	    	jump2Main();
 	    }
 	}
@@ -114,6 +107,7 @@ public class LanchActivity extends BaseActivity {
 	private void jump2Main(){
 	    Intent intent = new Intent(this,MainActivity.class);
 	    startActivity(intent);
+	    LanchActivity.this.finish();
 	}
 	
 	
@@ -135,6 +129,5 @@ public class LanchActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
-//		mFloatView.gone();
 	}
 }

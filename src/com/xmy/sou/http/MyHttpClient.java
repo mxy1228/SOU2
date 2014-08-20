@@ -1,0 +1,42 @@
+package com.xmy.sou.http;
+
+import com.loopj.android.http.AsyncHttpClient;
+import com.loopj.android.http.RequestParams;
+import com.xmy.sou.config.Contants;
+
+public class MyHttpClient extends AsyncHttpClient {
+
+	public MyHttpClient(){
+		init();
+	}
+	
+	private void init(){
+		this.setTimeout(Contants.TIME_OUT);
+	}
+	
+	/**
+	 * Get请求
+	 * @param url
+	 * @param params
+	 * @param handler
+	 */
+	public void get(String url,RequestParams params,MyHttpHandler handler){
+		if(handler != null){
+			handler.setUrl(url);
+		}
+		this.get(url, params, handler);
+	}
+	
+	/**
+	 * Post请求
+	 * @param url
+	 * @param params
+	 * @param handler
+	 */
+	public void post(String url,RequestParams params,MyHttpHandler handler){
+		if(handler != null){
+			handler.setUrl(url);
+		}
+		this.post(url, params, handler);
+	}
+}

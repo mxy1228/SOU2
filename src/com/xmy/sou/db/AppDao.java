@@ -223,6 +223,16 @@ public class AppDao {
 		return null;
 	}
 	
+//	/**
+//	 * 根据包名更新DB中对应APP的启动时间及启动次数
+//	 * @param packageName
+//	 * @return
+//	 */
+//	public boolean updateAppLanchInfo(String packageName){
+//		
+//	}
+	
+	
 	private void closeSavely(SQLiteDatabase database,SQLiteStatement stm){
 		if(database != null){
 			database.close();

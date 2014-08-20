@@ -64,14 +64,14 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     @Override
     protected void onResume() {
     	super.onResume();
-    	new Handler().postDelayed(new Runnable() {
-			
-			@Override
-			public void run() {
-				InputMethodManager inputManager = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
-		    	inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-			}
-		}, 500);
+//    	new Handler().postDelayed(new Runnable() {
+//			
+//			@Override
+//			public void run() {
+//				InputMethodManager inputManager = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
+//		    	inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
+//			}
+//		}, 500);
     	
     }
 
