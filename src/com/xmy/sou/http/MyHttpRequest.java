@@ -11,7 +11,7 @@ import com.xmy.sou.log.SLog;
 
 public class MyHttpRequest {
 
-	private static final String WEATHER_URL = "http://api.36wu.com";//根据经纬度请求天气的API
+	private static final String WEATHER_URL = "http://api.36wu.com/Weather/GetWeatherByLocation";//根据经纬度请求天气的API
 	
 	public interface ReqHandler<T>{
 		public void onStart();
@@ -29,11 +29,9 @@ public class MyHttpRequest {
 	 * 根据经纬度获取实时天气
 	 * @param <T>
 	 */
-	public <T> void weatherReq(long lng,long lat,final ReqHandler<WeatherBean> handler){
-		RequestParams params = new RequestParams();
-		params.put("lng", lng);
-		params.put("lat", lat);
-		new MyHttpClient().post(WEATHER_URL, params, new MyHttpHandler(){
+	public <T> void weatherReq(double lng,double lat,final ReqHandler<WeatherBean> handler){
+		String url = WEATHER_URL + "?lng="+lng+"&lat="+lat+"&output=json";
+		new MyHttpClient().doGet(url, null, new MyHttpHandler(){
 			
 			@Override
 			public void onStart() {
@@ -43,6 +41,7 @@ public class MyHttpRequest {
 			@Override
 			public void onSuccess(int statusCode, String content) {
 				try {
+					super.onSuccess(statusCode, content);
 					WeatherBean bean = getMapper().readValue(content, new TypeReference<WeatherBean>() {
 					});
 					handler.onSuccess(bean);
@@ -53,6 +52,7 @@ public class MyHttpRequest {
 			
 			@Override
 			public void onFailure(Throwable error, String content) {
+				super.onFailure(error, content);
 				handler.onFailure();
 			}
 			

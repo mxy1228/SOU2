@@ -3,11 +3,9 @@ package com.xmy.sou.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -16,7 +14,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
@@ -24,13 +21,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import com.xmy.bean.WeatherBean;
+import com.xmy.itf.IMainActivity;
+import com.xmy.presenter.MainPresenter;
 import com.xmy.sou.R;
 import com.xmy.sou.db.AppDao;
 import com.xmy.sou.entity.AppInfo;
+import com.xmy.sou.http.MyHttpRequest;
 import com.xmy.sou.log.SLog;
 import com.xmy.sou.view.adapter.AppListAdapter;
 
-public class MainActivity extends BaseActivity implements OnEditorActionListener,OnItemClickListener{
+public class MainActivity extends BaseActivity implements OnEditorActionListener,OnItemClickListener,IMainActivity{
 
     private EditText mSearchET;
     private ListView mListView;
@@ -38,6 +39,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     private AppDao mDao;
     private AppListAdapter mAdapter;
     private List<AppInfo> mData;
+    private MainPresenter mPresenter;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -110,6 +112,8 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	}
     	mListView.setAdapter(mAdapter);
     	mListView.setOnItemClickListener(this);
+    	mPresenter = new MainPresenter(this);
+    	mPresenter.requstLocate(getApplicationContext());
 	}
 
 	@Override
@@ -143,6 +147,32 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 					}
 					mAdapter.changeData(data);
 				}
+			}
+		});
+	}
+
+	/**
+	 * 接收到百度定位结果
+	 */
+	@Override
+	public void onLocation(double lnt, double lat) {
+		new MyHttpRequest().weatherReq(lnt, lat, new MyHttpRequest.ReqHandler<WeatherBean>() {
+
+			@Override
+			public void onStart() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void onSuccess(WeatherBean t) {
+				SLog.d("天气："+t.getData().getWeather());
+			}
+
+			@Override
+			public void onFailure() {
+				// TODO Auto-generated method stub
+				
 			}
 		});
 	}

@@ -12,6 +12,7 @@ public class MyHttpClient extends AsyncHttpClient {
 	
 	private void init(){
 		this.setTimeout(Contants.TIME_OUT);
+		this.setMaxRetriesAndTimeout(2, Contants.TIME_OUT);
 	}
 	
 	/**
@@ -20,7 +21,7 @@ public class MyHttpClient extends AsyncHttpClient {
 	 * @param params
 	 * @param handler
 	 */
-	public void get(String url,RequestParams params,MyHttpHandler handler){
+	public void doGet(String url,RequestParams params,MyHttpHandler handler){
 		if(handler != null){
 			handler.setUrl(url);
 		}
@@ -33,7 +34,7 @@ public class MyHttpClient extends AsyncHttpClient {
 	 * @param params
 	 * @param handler
 	 */
-	public void post(String url,RequestParams params,MyHttpHandler handler){
+	public void doPost(String url,RequestParams params,MyHttpHandler handler){
 		if(handler != null){
 			handler.setUrl(url);
 		}
