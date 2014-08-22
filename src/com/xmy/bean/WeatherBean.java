@@ -1,27 +1,37 @@
 package com.xmy.bean;
 
+import java.util.List;
+
 public class WeatherBean {
 
 	private String status;
-	private String message;
-	private WeatherInnerBean data;
+	private String error;
+	private String date;
+	private List<WeatherInnerBean> results;
+	
 	public String getStatus() {
 		return status;
 	}
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	public String getMessage() {
-		return message;
+	public String getError() {
+		return error;
 	}
-	public void setMessage(String message) {
-		this.message = message;
+	public void setError(String error) {
+		this.error = error;
 	}
-	public WeatherInnerBean getData() {
-		return data;
+	public String getDate() {
+		return date;
 	}
-	public void setData(WeatherInnerBean data) {
-		this.data = data;
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public List<WeatherInnerBean> getResults() {
+		return results;
+	}
+	public void setResults(List<WeatherInnerBean> results) {
+		this.results = results;
 	}
 	
 	

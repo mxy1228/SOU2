@@ -20,6 +20,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
+import android.widget.Toast;
 
 import com.xmy.bean.WeatherBean;
 import com.xmy.itf.IMainActivity;
@@ -66,15 +67,6 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     @Override
     protected void onResume() {
     	super.onResume();
-//    	new Handler().postDelayed(new Runnable() {
-//			
-//			@Override
-//			public void run() {
-//				InputMethodManager inputManager = (InputMethodManager) getApplication().getSystemService(Context.INPUT_METHOD_SERVICE);
-//		    	inputManager.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
-//			}
-//		}, 500);
-    	
     }
 
 
@@ -166,7 +158,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 
 			@Override
 			public void onSuccess(WeatherBean t) {
-				SLog.d("天气："+t.getData().getWeather());
+				Toast.makeText(MainActivity.this, t.getResults().get(0).getWeather_data().get(0).getWeather(), Toast.LENGTH_LONG).show();
 			}
 
 			@Override

@@ -15,7 +15,8 @@
         android:background="@drawable/et_xbg"
         android:imeOptions="actionSearch"
         android:padding="3.0dip"
-        android:minHeight="40.0dip"/>
+        android:minHeight="40.0dip">
+    </EditText>
 	
     
     <ListView 
