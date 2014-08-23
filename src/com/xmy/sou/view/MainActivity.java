@@ -31,11 +31,13 @@ import com.xmy.sou.entity.AppInfo;
 import com.xmy.sou.http.MyHttpRequest;
 import com.xmy.sou.log.SLog;
 import com.xmy.sou.view.adapter.AppListAdapter;
+import com.xmy.sou.widget.StreamView;
 
 public class MainActivity extends BaseActivity implements OnEditorActionListener,OnItemClickListener,IMainActivity{
 
     private EditText mSearchET;
     private ListView mListView;
+    private StreamView mStreamView;
     	
     private AppDao mDao;
     private AppListAdapter mAdapter;
@@ -92,6 +94,11 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 	protected void initView() {
 	    this.mListView = (ListView)findViewById(R.id.main_lv);
     	this.mSearchET = (EditText)findViewById(R.id.main_et);
+    	this.mStreamView = (StreamView)findViewById(R.id.stream_view);
+    	int[] res = new int[2];
+    	res[0] = R.drawable.overcast_sky1;
+    	res[1] = R.drawable.overcast_sky2;
+    	this.mStreamView.setResource(res);
 	}
 
 	@Override
