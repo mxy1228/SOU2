@@ -15,8 +15,6 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
-import com.xmy.sou.log.SLog;
-
 public class StreamView extends FrameLayout {
 
 	private static final int DURATION = 10 * 1000;
@@ -27,8 +25,8 @@ public class StreamView extends FrameLayout {
 	private Context mContext;
 	private Handler mHandler;
 	
-	private float mMinFloat = 1.2f;
-	private float mMaxFloat = 1.9f;
+	private float mMinFloat = 1.1F;
+	private float mMaxFloat = 1.9F;
 	private int mCurFloatIndex = -1;
 	
 	public StreamView(Context context) {
@@ -122,17 +120,24 @@ public class StreamView extends FrameLayout {
 	
 	@SuppressLint("NewApi")
 	private void anim(ImageView iv){
-		float fromFloat = getScale();
+		float fromScale = getScale();
 		float toFloat = getScale();
-		float fromFloatX = getTranslation(iv.getWidth(), fromFloat);
-		float fromFloatY = getTranslation(iv.getHeight(), fromFloat);
-		float toFloatX = getTranslation(iv.getWidth(), toFloat);
-		float toFloatY = getTranslation(iv.getHeight(), toFloat);
-		iv.setScaleX(fromFloat);
-		iv.setScaleY(fromFloat);
+		float fromFloatX = getTranslation(iv.getWidth(), fromScale);
+		float fromFloatY = getTranslation(iv.getHeight(), fromScale);
+		float toFloatX = 
+				getTranslation(iv.getWidth(), toFloat);
+		float toFloatY = 
+				getTranslation(iv.getHeight(), toFloat);
+		iv.setScaleX(fromScale);
+		iv.setScaleY(fromScale);
 		iv.setTranslationX(fromFloatX);
 		iv.setTranslationY(fromFloatY);
-		ViewPropertyAnimator propertyAnim = iv.animate().translationX(toFloatX).translationY(toFloatY).scaleX(toFloat).scaleY(toFloat).setDuration(DURATION);
+		ViewPropertyAnimator propertyAnim = iv.animate()
+				.translationX(toFloatX)
+				.translationY(toFloatY)
+				.scaleX(toFloat)
+				.scaleY(toFloat)
+				.setDuration(DURATION);
 		propertyAnim.start();
 		propertyAnim.setListener(new AnimatorListener() {
 			

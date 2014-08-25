@@ -3,6 +3,8 @@ package com.xmy.sou.view;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
@@ -23,6 +25,7 @@ import android.widget.TextView.OnEditorActionListener;
 import android.widget.Toast;
 
 import com.xmy.bean.WeatherBean;
+import com.xmy.bean.WeatherToShowBean;
 import com.xmy.itf.IMainActivity;
 import com.xmy.presenter.MainPresenter;
 import com.xmy.sou.R;
@@ -38,6 +41,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     private EditText mSearchET;
     private ListView mListView;
     private StreamView mStreamView;
+    private ActionBar mActionBar;
     	
     private AppDao mDao;
     private AppListAdapter mAdapter;
@@ -95,9 +99,10 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 	    this.mListView = (ListView)findViewById(R.id.main_lv);
     	this.mSearchET = (EditText)findViewById(R.id.main_et);
     	this.mStreamView = (StreamView)findViewById(R.id.stream_view);
+    	this.mActionBar = getActionBar();
     	int[] res = new int[2];
-    	res[0] = R.drawable.overcast_sky1;
-    	res[1] = R.drawable.overcast_sky2;
+    	res[0] = R.drawable.rain1;
+    	res[1] = R.drawable.rain2;
     	this.mStreamView.setResource(res);
 	}
 
@@ -155,7 +160,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 	 */
 	@Override
 	public void onLocation(double lnt, double lat) {
-		new MyHttpRequest().weatherReq(lnt, lat, new MyHttpRequest.ReqHandler<WeatherBean>() {
+		new MyHttpRequest().weatherReq(lnt, lat, new MyHttpRequest.ReqHandler<WeatherToShowBean>() {
 
 			@Override
 			public void onStart() {
@@ -163,9 +168,12 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 				
 			}
 
+			@SuppressLint("NewApi")
 			@Override
-			public void onSuccess(WeatherBean t) {
-				Toast.makeText(MainActivity.this, t.getResults().get(0).getWeather_data().get(0).getWeather(), Toast.LENGTH_LONG).show();
+			public void onSuccess(WeatherToShowBean t) {
+				mActionBar.setIcon(t.getRes());
+				mActionBar.setTitle(t.getWeather());
+//				Toast.makeText(MainActivity.this, t.getResults().get(0).getWeather_data().get(0).getWeather(), Toast.LENGTH_LONG).show();
 			}
 
 			@Override
