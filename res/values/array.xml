@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- 0~6 -->
+    <string-array name="a_color">
+        <item>#FFCC99</item>
+        <item>#99CCCC</item>
+    </string-array>
+    <!-- 6~9 -->
+    <string-array name="b_color">
+        <item>#FFD311</item>
+        <item>#EEFEFE</item>
+    </string-array>
+    <!-- 9~12 -->
+    <string-array name="c_color">
+        <item>#003386</item>
+        <item>#6AB1D0</item>
+    </string-array>
+    <!-- 12~16 -->
+    <string-array name="d_color">
+        <item>#FF1511</item>
+        <item>#FFA611</item>
+    </string-array>
+    <!-- 16~18 -->
+    <string-array name="e_color">
+        <item>#FF641B</item>
+        <item >#EAAF47</item>
+    </string-array>
+    <!-- 18~21 -->
+    <string-array name="f_color">
+        <item>#190C37</item>
+        <item>#B9B2E4</item>
+    </string-array>
+    <!-- 21~0 -->
+    <string-array name="g_color">
+        <item>#000000</item>
+        <item >#00688B</item>
+    </string-array>
+</resources>

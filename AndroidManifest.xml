@@ -16,7 +16,8 @@
         android:theme="@android:style/Theme.Holo.Light" >
         <activity
             android:name="com.xmy.sou.view.MainActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:theme="@style/MyTheme">
         </activity>
         <activity android:name=".view.LanchActivity">
             <intent-filter>

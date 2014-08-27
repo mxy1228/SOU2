@@ -1,9 +1,13 @@
 package com.xmy.sou.http;
 
+import java.util.Date;
+
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.DeserializationConfig.Feature;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.type.TypeReference;
+
+import android.text.format.Time;
 
 import com.xmy.bean.WeatherBean;
 import com.xmy.bean.WeatherToShowBean;
@@ -32,7 +36,7 @@ public class MyHttpRequest {
 	 * @param <T>
 	 */
 	public <T> void weatherReq(double lng,double lat,final ReqHandler<WeatherToShowBean> handler){
-		String uri = "telematics/v3/weather?"+"location="+lng+","+lat+"&output=json"+"&ak=A72e372de05e63c8740b2622d0ed8ab1";
+		String uri = "telematics/v3/weather?"+"location="+lng+","+lat+"&output=json"+"&ak=990e448e60aa0753ccdd9173b5e558ec";
 		String url = WEATHER_URL + uri;
 		new MyHttpClient().doGet(url, null, new MyHttpHandler(){
 			
@@ -53,7 +57,7 @@ public class MyHttpRequest {
 						tBean.setRes(R.drawable.weather_sha);
 					}else if(weather.equals("晴")){
 						tBean.setRes(R.drawable.weather_qing);
-					}else if(weather.equals("多云")){
+					}else if(weather.contains("多云")){
 						tBean.setRes(R.drawable.weather_cloud);
 					}else if(weather.contains("阴")){
 						tBean.setRes(R.drawable.weather_yin);
@@ -65,6 +69,7 @@ public class MyHttpRequest {
 						tBean.setRes(R.drawable.weather_xiaoxue);
 					}
 					tBean.setWeather(weather);
+					
 					handler.onSuccess(tBean);
 				} catch (Exception e) {
 					SLog.e(e);

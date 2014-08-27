@@ -7,8 +7,12 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
+import android.graphics.drawable.GradientDrawable;
+import android.graphics.drawable.GradientDrawable.Orientation;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
@@ -19,12 +23,12 @@ import android.view.inputmethod.EditorInfo;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
-import android.widget.Toast;
 
-import com.xmy.bean.WeatherBean;
+import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.xmy.bean.WeatherToShowBean;
 import com.xmy.itf.IMainActivity;
 import com.xmy.presenter.MainPresenter;
@@ -34,17 +38,16 @@ import com.xmy.sou.entity.AppInfo;
 import com.xmy.sou.http.MyHttpRequest;
 import com.xmy.sou.log.SLog;
 import com.xmy.sou.view.adapter.AppListAdapter;
-import com.xmy.sou.widget.StreamView;
 
 public class MainActivity extends BaseActivity implements OnEditorActionListener,OnItemClickListener,IMainActivity{
 
     private EditText mSearchET;
     private ListView mListView;
-    private StreamView mStreamView;
+    private LinearLayout mRootView;
     private ActionBar mActionBar;
     	
     private AppDao mDao;
-    private AppListAdapter mAdapter;
+    private AlphaInAnimationAdapter mAlphaAdapter;
     private List<AppInfo> mData;
     private MainPresenter mPresenter;
     
@@ -98,12 +101,8 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 	protected void initView() {
 	    this.mListView = (ListView)findViewById(R.id.main_lv);
     	this.mSearchET = (EditText)findViewById(R.id.main_et);
-    	this.mStreamView = (StreamView)findViewById(R.id.stream_view);
+    	this.mRootView = (LinearLayout)findViewById(R.id.main_rootview);
     	this.mActionBar = getActionBar();
-    	int[] res = new int[2];
-    	res[0] = R.drawable.rain1;
-    	res[1] = R.drawable.rain2;
-    	this.mStreamView.setResource(res);
 	}
 
 	@Override
@@ -111,13 +110,16 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 	    if(mData == null){
     		mData = new ArrayList<AppInfo>();
     	}
-    	if(mAdapter == null){
-    		mAdapter = new AppListAdapter(this, mData);
+    	if(mAlphaAdapter == null){
+    		AppListAdapter adapter = new AppListAdapter(this, mData);
+    		mAlphaAdapter = new AlphaInAnimationAdapter(adapter);
+    		mAlphaAdapter.setAbsListView(mListView);
     	}
-    	mListView.setAdapter(mAdapter);
+    	mListView.setAdapter(mAlphaAdapter);
     	mListView.setOnItemClickListener(this);
     	mPresenter = new MainPresenter(this);
     	mPresenter.requstLocate(getApplicationContext());
+    	mPresenter.requestRootViewBG(this);
 	}
 
 	@Override
@@ -141,16 +143,17 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 			@Override
 			public void afterTextChanged(Editable s) {
 				String key = s.toString().trim();
-				if(TextUtils.isEmpty(key)){
-					mAdapter.changeData(mData);
-				}else{
+				mData.clear();
+				mAlphaAdapter.reset();
+				if(!TextUtils.isEmpty(key)){
 					List<AppInfo> data = mDao.search(key);
 					if(data == null){
 						SLog.e("data is null");
 						return;
 					}
-					mAdapter.changeData(data);
+					mData.addAll(data);
 				}
+				mAlphaAdapter.notifyDataSetChanged();
 			}
 		});
 	}
@@ -172,8 +175,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 			@Override
 			public void onSuccess(WeatherToShowBean t) {
 				mActionBar.setIcon(t.getRes());
-				mActionBar.setTitle(t.getWeather());
-//				Toast.makeText(MainActivity.this, t.getResults().get(0).getWeather_data().get(0).getWeather(), Toast.LENGTH_LONG).show();
+				mActionBar.setTitle(Html.fromHtml("<font color=\"white\">"+t.getWeather()+"</font>"));
 			}
 
 			@Override
@@ -183,6 +185,14 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 			}
 		});
 	}
+
+	@Override
+	public void onReceiveRootBG(String fromColor, String toColor) {
+		GradientDrawable d = new GradientDrawable(Orientation.TOP_BOTTOM, new int[]{Color.parseColor(fromColor),Color.parseColor(toColor)});
+		mRootView.setBackgroundDrawable(d);
+	}
     
-    
+    private void changeAdapterData(){
+    	
+    }
 }

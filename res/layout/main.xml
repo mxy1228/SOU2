@@ -1,27 +1,24 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_rootview"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
-    
-    <com.xmy.sou.widget.StreamView 
-        android:id="@+id/stream_view"
-        android:layout_width="match_parent"
-        android:layout_height="70.0dip"
-        ></com.xmy.sou.widget.StreamView>
+    android:orientation="vertical"
+    android:paddingLeft="@dimen/padding"
+    android:paddingRight="@dimen/padding"
+    android:background="@drawable/main_xbg">
     
     <EditText
         android:id="@+id/main_et"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/padding"
-        android:layout_margin="@dimen/padding"
+        android:layout_marginTop="60.0dip"
         android:gravity="left|center_vertical"
         android:singleLine="true"
         android:imeOptions="actionSearch"
         android:padding="3.0dip"
-        android:background="#FFFFFFFF"
-        android:minHeight="40.0dip">
+        android:background="@drawable/et_xbg"
+        android:minHeight="50.0dip">
     </EditText>
 	
     
@@ -30,6 +27,7 @@
         android:layout_width="match_parent"
         android:layout_height="0.0dip"
         android:layout_weight="1.0"
+        android:layout_marginTop="5.0dip"
         android:divider="@null"
         android:fadingEdge="@null"/>
     
