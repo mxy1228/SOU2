@@ -28,6 +28,7 @@
         android:layout_height="0.0dip"
         android:layout_weight="1.0"
         android:layout_marginTop="5.0dip"
+        android:listSelector="@android:color/transparent"
         android:divider="@null"
         android:fadingEdge="@null"/>
     

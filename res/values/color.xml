@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="white">#FFFFFF</color>
+    <drawable name="item_press">#77FFFFFF</drawable>
+    <drawable name="item_normal">#44FFFFFF</drawable>
 </resources>
