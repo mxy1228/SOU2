@@ -45,6 +45,10 @@ public class MainPresenter {
 		client.requestLocation();
 	}
 	
+	/**
+	 * 根据当前系统时间设置背景颜色
+	 * @param ctx
+	 */
 	public void requestRootViewBG(Context ctx){
 		Time t = new Time();
 		t.setToNow();
@@ -67,5 +71,13 @@ public class MainPresenter {
 			colors = ctx.getResources().getStringArray(R.array.g_color);
 		}
 		mIMainActivity.onReceiveRootBG(colors[0], colors[1]);
+	}
+	
+	/**
+	 * 启动DB检测服务
+	 * @param ctx
+	 */
+	public void startCheckService(Context ctx){
+		
 	}
 }

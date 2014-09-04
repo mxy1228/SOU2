@@ -7,6 +7,7 @@ public class WeatherToShowBean {
 	private int res;
 	private String fromColor;
 	private String toColor;
+	private String temperature;
 	
 	public String getWeather() {
 		return weather;
@@ -31,6 +32,12 @@ public class WeatherToShowBean {
 	}
 	public void setToColor(String toColor) {
 		this.toColor = toColor;
+	}
+	public String getTemperature() {
+		return temperature;
+	}
+	public void setTemperature(String temperature) {
+		this.temperature = temperature;
 	}
 	
 }

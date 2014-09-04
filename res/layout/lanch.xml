@@ -2,9 +2,31 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/lanch_container"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#76EEC6">
+    android:layout_height="match_parent">
     
+    <!--  -->
+    
+    <ScrollView 
+        android:id="@+id/lanch_sv"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+        
+        <!--  <ImageView
+            android:id="@+id/lanch_iv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scaleType="fitXY"
+            android:src="@drawable/sky"/>-->
+        
+        <com.xmy.sou.widget.StreamView 
+	        android:id="@+id/lanch_stream_view"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content">
+        
+    	</com.xmy.sou.widget.StreamView>
+    
+    </ScrollView>
     
     <TextView
         android:id="@+id/lanch_tv"

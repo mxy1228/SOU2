@@ -1,33 +1,35 @@
 package com.xmy.sou.widget;
 
-import java.util.Random;
+import java.io.InputStream;
 
-import android.animation.Animator;
-import android.animation.Animator.AnimatorListener;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
+import com.xmy.sou.log.SLog;
+
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.ViewPropertyAnimator;
+import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
 
 public class StreamView extends FrameLayout {
 
-	private static final int DURATION = 10 * 1000;
+	private static final int DURATION = 15 * 1000;
 	private static final int FADE_DURATION = 3 * 1000;
 	
 	private int[] mRes;
-	private ImageView[] mIVs;
+//	private ImageView[] mIVs;
 	private Context mContext;
 	private Handler mHandler;
+	private ImageView mIV;
 	
 	private float mMinFloat = 1.1F;
 	private float mMaxFloat = 1.9F;
-	private int mCurFloatIndex = -1;
+//	private int mCurFloatIndex = -1;
 	
 	public StreamView(Context context) {
 		super(context);
@@ -48,21 +50,21 @@ public class StreamView extends FrameLayout {
 	}
 	
 	private void init(){
-		mIVs = new ImageView[2];
-		ImageView iv1 = new ImageView(mContext);
+//		mIVs = new ImageView[2];
+		mIV = new ImageView(mContext);
 		FrameLayout.LayoutParams param1 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT
 				, FrameLayout.LayoutParams.MATCH_PARENT);
-		iv1.setLayoutParams(param1);
-		iv1.setScaleType(ScaleType.CENTER_CROP);
-		mIVs[0] = iv1;
-		this.addView(iv1);
-		ImageView iv2 = new ImageView(mContext);
-		FrameLayout.LayoutParams param2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT
-				, FrameLayout.LayoutParams.MATCH_PARENT);
-		iv2.setLayoutParams(param2);
-		iv2.setScaleType(ScaleType.CENTER_CROP);
-		mIVs[1] = iv2;
-		this.addView(iv2);
+		mIV.setLayoutParams(param1);
+		mIV.setScaleType(ScaleType.FIT_XY);
+//		mIVs[0] = iv1;
+		this.addView(mIV);
+//		ImageView iv2 = new ImageView(mContext);
+//		FrameLayout.LayoutParams param2 = new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT
+//				, FrameLayout.LayoutParams.MATCH_PARENT);
+//		iv2.setLayoutParams(param2);
+//		iv2.setScaleType(ScaleType.CENTER_CROP);
+//		mIVs[1] = iv2;
+//		this.addView(iv2);
 		this.mHandler = new Handler();
 	}
 
@@ -91,79 +93,82 @@ public class StreamView extends FrameLayout {
 	 * 开始流动画
 	 */
 	private void startStreamAnimation(){
-		if(mCurFloatIndex == -1){
-			mCurFloatIndex = 1;
-			anim(mIVs[mCurFloatIndex]);
-			return;
-		}
-		int index = mCurFloatIndex;
-		mCurFloatIndex = (1 + mCurFloatIndex) % mIVs.length;
-		
-		ImageView curIV = mIVs[index];
-		ImageView nextIV = mIVs[mCurFloatIndex];
-		nextIV.setAlpha(0.0f);
-		anim(nextIV);
-		AnimatorSet animatorSet = new AnimatorSet();
-		animatorSet.setDuration(FADE_DURATION);
-		animatorSet.playTogether(ObjectAnimator.ofFloat(curIV, "alpha", 1.0f , 0.0f)
-				, ObjectAnimator.ofFloat(nextIV, "alpha", 0.0f,1.0f));
-		animatorSet.start();
+//		if(mCurFloatIndex == -1){
+//			mCurFloatIndex = 1;
+//			anim(mIVs[mCurFloatIndex]);
+//			return;
+//		}
+//		int index = mCurFloatIndex;
+//		mCurFloatIndex = (1 + mCurFloatIndex) % mIVs.length;
+//		
+//		ImageView curIV = mIVs[index];
+//		ImageView nextIV = mIVs[mCurFloatIndex];
+//		nextIV.setAlpha(0.0f);
+		anim(mIV);
+//		AnimatorSet animatorSet = new AnimatorSet();
+//		animatorSet.setDuration(FADE_DURATION);
+//		animatorSet.playTogether(ObjectAnimator.ofFloat(curIV, "alpha", 1.0f , 0.0f)
+//				, ObjectAnimator.ofFloat(nextIV, "alpha", 0.0f,1.0f));
+//		animatorSet.start();
 	}
 	
-	private float getScale(){
-		return this.mMinFloat + (new Random().nextFloat() * (this.mMaxFloat - this.mMinFloat));
-	}
+//	private float getScale(){
+//		return this.mMinFloat + (new Random().nextFloat() * (this.mMaxFloat - this.mMinFloat));
+//	}
 	
-	private float getTranslation(int value,float ratio){
-		return value * (ratio - 1.0f) * (new Random().nextFloat() - 0.5f);
-	}
+//	private float getTranslation(int value,float ratio){
+//		return value * (ratio - 1.0f) * (new Random().nextFloat() - 0.5f);
+//	}
 	
 	@SuppressLint("NewApi")
 	private void anim(ImageView iv){
-		float fromScale = getScale();
-		float toFloat = getScale();
-		float fromFloatX = getTranslation(iv.getWidth(), fromScale);
-		float fromFloatY = getTranslation(iv.getHeight(), fromScale);
-		float toFloatX = 
-				getTranslation(iv.getWidth(), toFloat);
-		float toFloatY = 
-				getTranslation(iv.getHeight(), toFloat);
-		iv.setScaleX(fromScale);
-		iv.setScaleY(fromScale);
+		WindowManager wm = (WindowManager)mContext.getSystemService(Context.WINDOW_SERVICE);
+//		float fromScale = getScale();
+//		float toScale = getScale();
+		float fromFloatX = 0;
+//				getTranslation(iv.getWidth(), fromScale);
+		float fromFloatY = 0;
+//				getTranslation(iv.getHeight(), fromScale);
+		float toFloatX = 0;
+//				getTranslation(iv.getWidth(), toFloat);
+		float toFloatY = 0 - mIV.getHeight() + wm.getDefaultDisplay().getHeight();
+//				getTranslation(iv.getHeight(), toFloat);
+//		iv.setScaleX(fromScale);
+//		iv.setScaleY(fromScale);
 		iv.setTranslationX(fromFloatX);
 		iv.setTranslationY(fromFloatY);
 		ViewPropertyAnimator propertyAnim = iv.animate()
 				.translationX(toFloatX)
 				.translationY(toFloatY)
-				.scaleX(toFloat)
-				.scaleY(toFloat)
+//				.scaleX(toScale)
+//				.scaleY(toScale)
 				.setDuration(DURATION);
 		propertyAnim.start();
-		propertyAnim.setListener(new AnimatorListener() {
-			
-			@Override
-			public void onAnimationStart(Animator animation) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onAnimationRepeat(Animator animation) {
-				// TODO Auto-generated method stub
-				
-			}
-			
-			@Override
-			public void onAnimationEnd(Animator animation) {
-				mHandler.post(myRunnalble);
-			}
-			
-			@Override
-			public void onAnimationCancel(Animator animation) {
-				// TODO Auto-generated method stub
-				
-			}
-		});
+//		propertyAnim.setListener(new AnimatorListener() {
+//			
+//			@Override
+//			public void onAnimationStart(Animator animation) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void onAnimationRepeat(Animator animation) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//			
+//			@Override
+//			public void onAnimationEnd(Animator animation) {
+//				mHandler.post(myRunnalble);
+//			}
+//			
+//			@Override
+//			public void onAnimationCancel(Animator animation) {
+//				// TODO Auto-generated method stub
+//				
+//			}
+//		});
 	}
 	
 	
@@ -171,11 +176,20 @@ public class StreamView extends FrameLayout {
 	 * 设置图片资源
 	 * @param res
 	 */
-	public void setResource(int[] res){
-		mRes = res;
-		for(int i=0;i<res.length;i++){
-			mIVs[i].setImageResource(mRes[i]);
+	public void setResource(int res){
+//		mRes = res;
+//		for(int i=0;i<res.length;i++){
+//			mIVs[i].setImageResource(mRes[i]);
+//		}
+		try {
+//			InputStream is = mContext.getAssets().open("sky.jpg");
+//			Bitmap d = new BitmapDrawable(is).getBitmap();
+//			Bitmap scaled = Bitmap.createScaledBitmap(d, 512, d.getHeight()/2, true);
+			mIV.setImageResource(res);
+		} catch (Exception e) {
+			SLog.e(e);
 		}
+		
 	}
 	
 	private Runnable myRunnalble = new Runnable() {

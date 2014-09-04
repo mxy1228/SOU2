@@ -2,16 +2,20 @@ package com.xmy.sou.view;
 
 import java.util.List;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.actionbarsherlock.view.Menu;
 import com.xmy.event.SaveAppEvent;
 import com.xmy.sou.R;
 import com.xmy.sou.db.AppDao;
-import com.xmy.sou.view.cts.LanchProgressView;
+import com.xmy.sou.widget.LanchProgressView;
+import com.xmy.sou.widget.StreamView;
 
 import de.greenrobot.event.EventBus;
 
@@ -21,14 +25,17 @@ public class LanchActivity extends BaseActivity {
     	
     private TextView mRateTV;
     private RelativeLayout mContainerRL;
+//    private ImageView mIV;
+    private ScrollView mSV;
+    private StreamView mStreamView;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
-    		super.onCreate(savedInstanceState);
-    		setContentView(R.layout.lanch);
-    		initView();
-    		initEvent();
-    		initData();
+		super.onCreate(savedInstanceState);
+		setContentView(R.layout.lanch);
+		initView();
+		initEvent();
+		initData();
 	}
 	
 	private Thread mSaveThread = new Thread(new Runnable() {
@@ -45,6 +52,9 @@ public class LanchActivity extends BaseActivity {
 	protected void initView() {
 	    this.mRateTV = (TextView)findViewById(R.id.lanch_tv);
 	    this.mContainerRL = (RelativeLayout)findViewById(R.id.lanch_container);
+	    this.mSV = (ScrollView)findViewById(R.id.lanch_sv);
+	    this.mStreamView = (StreamView)findViewById(R.id.lanch_stream_view);
+	    this.mStreamView.setResource(R.drawable.sky);
 	    LanchProgressView progressView = new LanchProgressView(this);
 	    RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT
 	    		, RelativeLayout.LayoutParams.WRAP_CONTENT);
@@ -53,15 +63,28 @@ public class LanchActivity extends BaseActivity {
 	    this.mContainerRL.addView(progressView);
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void initData() {
 	    this.mDao = new AppDao(this);
-	    jump2();
+//	    mIV.setTranslationX(0);
+//	    mIV.setTranslationY(0);
+//	    ViewPropertyAnimator propertyAnim = mIV.animate()
+//				.translationX(0)
+//				.translationY(-)
+//				.setDuration(20 * 1000);
+//		propertyAnim.start();
+//	    jump2();
 	}
 
 	@Override
 	protected void initEvent() {
 	    EventBus.getDefault().registerSticky(this);
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		return false;
 	}
 	
 	/**
@@ -92,6 +115,8 @@ public class LanchActivity extends BaseActivity {
 	    int rate = (int)(event.getRate() * 100);
 	    this.mRateTV.setText(rate + "%");
 	    if(rate == 100){
+//	    	int scrollY = mSV.getScrollY();
+	    	mSV.smoothScrollTo(0, rate * 40);
 	    	jump2Main();
 	    }
 	}

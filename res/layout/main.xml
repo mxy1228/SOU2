@@ -8,19 +8,38 @@
     android:paddingRight="@dimen/padding"
     android:background="@drawable/main_xbg">
     
-    <EditText
-        android:id="@+id/main_et"
+    <LinearLayout 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="60.0dip"
-        android:gravity="left|center_vertical"
-        android:singleLine="true"
-        android:imeOptions="actionSearch"
-        android:padding="3.0dip"
         android:background="@drawable/et_xbg"
+        android:layout_marginTop="60.0dip"
+        android:orientation="horizontal"
+        android:padding="5.0dip"
+        android:gravity="center_vertical"
         android:minHeight="50.0dip">
-    </EditText>
-	
+        
+        <EditText
+	        android:id="@+id/main_et"
+	        android:layout_width="0.0dip"
+	        android:layout_height="match_parent"
+	        android:layout_weight="1.0"
+	        android:gravity="left|center_vertical"
+	        android:singleLine="true"
+	        android:imeOptions="actionSearch"
+	        android:background="@null">
+	    </EditText>
+	    
+        <ImageButton 
+            android:id="@+id/main_clear_ibtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:adjustViewBounds="true"
+            android:background="@null"
+            android:visibility="gone"
+            android:src="@drawable/search_clear_btn_xbg"/>
+        
+    </LinearLayout>
     
     <ListView 
         android:id="@+id/main_lv"

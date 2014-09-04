@@ -7,6 +7,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -107,6 +108,7 @@ public class AppDao {
 			+PROPERTIES.KEY+" = ? "
 			+" WHERE "+PROPERTIES.PACKAGE_NAME+" = ?";
 			stm = result == 0 ? database.compileStatement(insertSql) : database.compileStatement(updateSql);
+			SLog.d("name="+name);
 			stm.bindString(1, name);
 			stm.bindString(2, info.versionName);
 			stm.bindString(3, info.versionCode+"");
@@ -137,8 +139,9 @@ public class AppDao {
 		try {
 			JSONArray array = new JSONArray();
 			for(PackageInfo info : list){
+				Intent intent = mContext.getPackageManager().getLaunchIntentForPackage(info.packageName);
 				//屏蔽系统应用
-				if(!info.packageName.startsWith("com.android") && !info.packageName.endsWith("android")){
+				if(intent != null && !info.packageName.equals("com.xmy.sou")){
 					saveOrUpdate(info);
 					JSONObject obj = new JSONObject();
 					obj.put("packageName", info.packageName);

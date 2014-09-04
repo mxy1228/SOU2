@@ -69,7 +69,7 @@ public class MyHttpRequest {
 						tBean.setRes(R.drawable.weather_xiaoxue);
 					}
 					tBean.setWeather(weather);
-					
+					tBean.setTemperature(bean.getResults().get(0).getWeather_data().get(0).getTemperature());
 					handler.onSuccess(tBean);
 				} catch (Exception e) {
 					SLog.e(e);

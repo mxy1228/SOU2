@@ -9,6 +9,7 @@
     android:paddingBottom="5.0dip">
     
     <LinearLayout 
+        android:id="@+id/app_item_content_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

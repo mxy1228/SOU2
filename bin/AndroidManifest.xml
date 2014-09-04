@@ -11,14 +11,19 @@
     <application
         android:name="com.xmy.sou.SouApplication"
         android:allowBackup="true"
-        android:icon="@drawable/icon"
+        android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
+        android:hardwareAccelerated="false"
         android:theme="@android:style/Theme.Holo.Light" >
         <activity
             android:name="com.xmy.sou.view.MainActivity"
-            android:windowSoftInputMode="adjustResize">
+            android:windowSoftInputMode="adjustResize"
+            android:screenOrientation="portrait"
+            android:theme="@style/MyTheme">
         </activity>
-        <activity android:name=".view.LanchActivity">
+        <activity android:name=".view.LanchActivity"
+            android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -26,15 +31,6 @@
             </intent-filter>
         </activity>
         <service android:name=".service.XiaomiCloudSyncService"></service>
-        <activity
-            android:name="com.xiaomi.channel.openauth.AuthorizeActivity"
-            android:configChanges="orientation"
-            android:windowSoftInputMode="stateHidden">
-             <intent-filter>
-                <action android:name="com.xiaomi.openauth.action.AUTH"/>                
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-          </activity>
           
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter >

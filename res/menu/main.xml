@@ -6,7 +6,7 @@
         android:showAsAction="always"
         android:title="@string/action_settings">
         
-        <menu >
+        <!--  <menu >
             <item 
                 android:id="@+id/menu_item1"
                 android:showAsAction="withText"
@@ -18,7 +18,7 @@
                 android:text="测试2"/>
             
         </menu>
-        
+        -->
     </item>
 
 </menu>
