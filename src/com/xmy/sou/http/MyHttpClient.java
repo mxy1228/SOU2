@@ -2,7 +2,7 @@ package com.xmy.sou.http;
 
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.RequestParams;
-import com.xmy.sou.config.Contants;
+import com.xmy.sou.Contants;
 
 public class MyHttpClient extends AsyncHttpClient {
 

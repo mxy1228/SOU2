@@ -1,25 +1,11 @@
 package com.xmy.sou.log;
 
-import com.xmy.sou.config.Config;
+import com.xmy.sou.Config;
 
 import android.util.Log;
 
 public class SLog{
-//	private static static final String FORMAT = "yyyyMMdd-HH:mm:ss";
-//	private static static final String SPLIT = "\n-------------------------------------------------------------------------\n";
 	private static String TAG = "com.xmy.sou";
-//	
-//	private static SLog(){
-//		
-//	}
-//	
-//	public static static SLog getInstance(){
-//		if(log == null){
-//			log = new SLog();
-//		}
-//		TAG=getCurrentInfo();
-//		return log;
-//	}
 
 	private static void debug(String tag,Object obj) {
 		String funName = getFunName();

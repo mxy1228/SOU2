@@ -1,9 +1,11 @@
 package com.xmy.sou.view;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import android.annotation.SuppressLint;
+import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -12,7 +14,6 @@ import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.Settings;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
@@ -23,6 +24,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup.LayoutParams;
+import android.view.Window;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
@@ -40,11 +42,13 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import com.actionbarsherlock.app.ActionBar;
-import com.actionbarsherlock.view.Window;
+import com.actionbarsherlock.view.Menu;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
+import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
 import com.xmy.bean.WeatherToShowBean;
-import com.xmy.itf.IMainActivity;
+import com.xmy.event.UnistallAppEvent;
+import com.xmy.handler.IMainHandler;
 import com.xmy.presenter.MainPresenter;
 import com.xmy.sou.R;
 import com.xmy.sou.db.AppDao;
@@ -53,7 +57,9 @@ import com.xmy.sou.http.MyHttpRequest;
 import com.xmy.sou.log.SLog;
 import com.xmy.sou.view.adapter.AppListAdapter;
 
-public class MainActivity extends BaseActivity implements OnEditorActionListener,OnItemClickListener,IMainActivity,OnClickListener,OnItemLongClickListener{
+import de.greenrobot.event.EventBus;
+
+public class MainActivity extends BaseActivity implements OnEditorActionListener,OnItemClickListener,IMainHandler,OnClickListener,OnItemLongClickListener{
 
     private EditText mSearchET;
     private ListView mListView;
@@ -87,7 +93,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     }
     
     @Override
-    public boolean onCreateOptionsMenu(com.actionbarsherlock.view.Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
     	return true;
     }
     
@@ -127,7 +133,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     	View actionbarView = inflater.inflate(R.layout.actionbar, null);
     	this.mActionBarTV = (TextView)actionbarView.findViewById(R.id.actionbar_tv);
-    	this.mActionBar = getSupportActionBar();
+    	this.mActionBar = getActionBar();
     	ActionBar.LayoutParams ctsParams = new ActionBar.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT
     			, ActionBar.LayoutParams.WRAP_CONTENT);
     	this.mClearIBtn = (ImageButton)findViewById(R.id.main_clear_ibtn);
@@ -146,6 +152,25 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	this.mUnistallIBtn.setOnClickListener(this);
     	this.mUnistallPopView = new PopupWindow(unistallView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, false);
 	}
+	
+	private void initSlidingMenu(){
+		SlidingMenu menu = new SlidingMenu(this);
+		menu.setMode(SlidingMenu.LEFT);
+		menu.setTouchModeAbove(SlidingMenu.LEFT);
+//		menu.setShadowWidthRes(resId);设置阴影图片的宽度
+//		menu.setShadowDrawable(resId);设置阴影图片
+//		menu.setBehindOffsetRes(resID);设置划出主页面显示的剩余宽度
+		menu.attachToActivity(this, SlidingMenu.RIGHT, true);
+//		menu.setMenu(res);
+		menu.setOnOpenedListener(new OnOpenedListener() {
+			
+			@Override
+			public void onOpened() {
+				// TODO Auto-generated method stub
+				
+			}
+		});
+	}
 
 	@Override
 	protected void initData() {
@@ -159,6 +184,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	}
     	mListView.setAdapter(mAlphaAdapter);
     	mPresenter = new MainPresenter(this);
+    	EventBus.getDefault().register(this);
 	}
 
 	@Override
@@ -309,4 +335,18 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 		}
 	}
     
+	/**
+	 * 有APP被卸载后
+	 * @param e
+	 */
+	public void onEventMainThread(UnistallAppEvent e){
+		Iterator<AppInfo> it = mData.iterator();
+		while(it.hasNext()){
+			if(it.next().getPackageName().equals(e.getPackageName())){
+				it.remove();
+				break;
+			}
+		}
+		mAlphaAdapter.notifyDataSetChanged();
+	}
 }

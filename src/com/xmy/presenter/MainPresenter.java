@@ -8,15 +8,15 @@ import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
-import com.xmy.itf.IMainActivity;
+import com.xmy.handler.IMainHandler;
 import com.xmy.sou.R;
 import com.xmy.sou.log.SLog;
 
 public class MainPresenter {
 	
-	private IMainActivity mIMainActivity;
+	private IMainHandler mIMainActivity;
 	
-	public MainPresenter(IMainActivity i){
+	public MainPresenter(IMainHandler i){
 		this.mIMainActivity = i;
 	}
 

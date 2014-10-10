@@ -4,8 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import com.xmy.sou.config.Config;
-import com.xmy.sou.config.Contants;
+import com.xmy.sou.Config;
 
 public class DBHelper extends SQLiteOpenHelper{
 

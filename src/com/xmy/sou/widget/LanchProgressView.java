@@ -5,11 +5,12 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Paint.Align;
+import android.graphics.Paint.FontMetrics;
 import android.graphics.Paint.Style;
 import android.graphics.RectF;
+import android.text.TextPaint;
 import android.util.AttributeSet;
 import android.view.View;
-import android.view.WindowManager;
 
 import com.xmy.sou.R;
 
@@ -28,6 +29,7 @@ public class LanchProgressView extends View {
 	private Paint mOrangePaint;
 	private Paint mRedPaint;
 	private Paint mWhitePaint;
+	private Paint mBlackPaint;
 	
 	private int mTextSize;
 	private Context mContext;
@@ -61,29 +63,36 @@ public class LanchProgressView extends View {
 		float left = PADDING;
 		float right = mScreenWidth - (PADDING);
 		this.mRectF = new RectF(left, left, right, right);
-		this.mGreenPaint = new Paint();
-		initPaint(mGreenPaint, "#73bb0a");
-		this.mLightBluePaint = new Paint();
-		initPaint(mLightBluePaint, "#00a6ad");
-		this.mBluePaint = new Paint();
-		initPaint(mBluePaint, "#1983b6");
-		this.mPurplePaint = new Paint();
-		initPaint(mPurplePaint, "#8a3b85");
-		this.mRoseRedPaint = new Paint();
-		initPaint(mRoseRedPaint, "#cb3e73");
-		this.mYellowPaint = new Paint();
-		initPaint(mYellowPaint, "#f4ad00");
-		this.mOrangePaint = new Paint();
-		initPaint(mOrangePaint, "#fe770f");
-		this.mRedPaint = new Paint();
-		initPaint(mRedPaint, "#eb5345");
+//		this.mGreenPaint = new Paint();
+//		initPaint(mGreenPaint, "#73bb0a");
+//		this.mLightBluePaint = new Paint();
+//		initPaint(mLightBluePaint, "#00a6ad");
+//		this.mBluePaint = new Paint();
+//		initPaint(mBluePaint, "#1983b6");
+//		this.mPurplePaint = new Paint();
+//		initPaint(mPurplePaint, "#8a3b85");
+//		this.mRoseRedPaint = new Paint();
+//		initPaint(mRoseRedPaint, "#cb3e73");
+//		this.mYellowPaint = new Paint();
+//		initPaint(mYellowPaint, "#f4ad00");
+//		this.mOrangePaint = new Paint();
+//		initPaint(mOrangePaint, "#fe770f");
+//		this.mRedPaint = new Paint();
+//		initPaint(mRedPaint, "#eb5345");
 		
 		this.mWhitePaint = new Paint();
 		this.mWhitePaint.setAntiAlias(true);
 		this.mWhitePaint.setColor(Color.parseColor("#FFFFFF"));
 		this.mWhitePaint.setStyle(Style.STROKE);
-		this.mWhitePaint.setStrokeWidth(70);
-//		new Thread(new MyThread()).start();
+		this.mWhitePaint.setStrokeWidth(40);
+		
+		this.mBlackPaint = new Paint();
+		this.mBlackPaint.setAntiAlias(true);
+		this.mBlackPaint.setColor(Color.parseColor("#75C1DA"));
+		this.mBlackPaint.setStyle(Style.STROKE);
+		this.mBlackPaint.setStrokeWidth(40);
+		
+		new Thread(new MyThread()).start();
 		
 	}
 	
@@ -103,24 +112,31 @@ public class LanchProgressView extends View {
 //		int height = getHeight();
 //		SLog.d("progressView height = "+height+" and rectf height = "+mRectF.height());
 //		canvas.drawRect(mRectF, mGreenPaint);
-//		Paint p1 = mDrawColor == WHITE ? mBlackPaint : mWhitePaint;
-		canvas.drawArc(mRectF, 0, 45, false, mGreenPaint);
-		canvas.drawArc(mRectF, 45, 45, false, mLightBluePaint);
-		canvas.drawArc(mRectF, 90, 45, false, mBluePaint);
-		canvas.drawArc(mRectF, 135, 45, false, mPurplePaint);
-		canvas.drawArc(mRectF, 180, 45, false, mRoseRedPaint);
-		canvas.drawArc(mRectF, 225, 45, false, mYellowPaint);
-		canvas.drawArc(mRectF, 270, 45, false, mOrangePaint);
-		canvas.drawArc(mRectF, 315, 45, false, mRedPaint);
+		Paint p1 = mDrawColor == WHITE ? mBlackPaint : mWhitePaint;
+		canvas.drawArc(mRectF, -90, 360, false, p1);
+//		canvas.drawArc(mRectF, 0, 45, false, mGreenPaint);
+//		canvas.drawArc(mRectF, 45, 45, false, mLightBluePaint);
+//		canvas.drawArc(mRectF, 90, 45, false, mBluePaint);
+//		canvas.drawArc(mRectF, 135, 45, false, mPurplePaint);
+//		canvas.drawArc(mRectF, 180, 45, false, mRoseRedPaint);
+//		canvas.drawArc(mRectF, 225, 45, false, mYellowPaint);
+//		canvas.drawArc(mRectF, 270, 45, false, mOrangePaint);
+//		canvas.drawArc(mRectF, 315, 45, false, mRedPaint);
 		
-//		Paint p2 = mDrawColor == WHITE ? mWhitePaint : mBlackPaint;
-//		canvas.drawArc(mRectF, -90, mProgress * 3.6f, false, p2);
+		Paint p2 = mDrawColor == WHITE ? mWhitePaint : mBlackPaint;
+		canvas.drawArc(mRectF, -90, mProgress * 3.6f, false, p2);
+		
 //		TextPaint textP = new TextPaint();
 //		float textWidth = textP.measureText(""+mProgress);
+//		textP.setColor(Color.parseColor("#FFFFFF"));
+//		textP.setTextSize(10);
+//		textP.setStyle(Style.STROKE);
+//		textP.setStrokeWidth(10);
 //		float x = (mRectF.right - textWidth) / 2;
 //		FontMetrics fm = mWhitePaint.getFontMetrics();
 //		float y = mRectF.top + (mRectF.bottom - mRectF.top) / 2 - (fm.bottom - fm.top) / 2 + Math.abs(fm.top);
-//		canvas.drawText(""+mProgress, x, y, mWhitePaint);
+//		canvas.drawText(""+mProgress, x, y, textP);
+		
 	}
 	
 	@Override

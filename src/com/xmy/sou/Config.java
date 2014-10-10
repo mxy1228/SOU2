@@ -1,4 +1,4 @@
-package com.xmy.sou.config;
+package com.xmy.sou;
 
 public class Config {
 

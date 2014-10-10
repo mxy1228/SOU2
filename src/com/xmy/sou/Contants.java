@@ -26,4 +26,5 @@ public class Contants {
 	 * 小米APPID
 	 */
 	public static final Long XIAOMI_APP_ID = 2882303761517238400l;
+	public static final int TIME_OUT = 15 * 1000;//网络连接超时时间
 }

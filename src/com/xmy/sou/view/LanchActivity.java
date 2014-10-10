@@ -67,14 +67,7 @@ public class LanchActivity extends BaseActivity {
 	@Override
 	protected void initData() {
 	    this.mDao = new AppDao(this);
-//	    mIV.setTranslationX(0);
-//	    mIV.setTranslationY(0);
-//	    ViewPropertyAnimator propertyAnim = mIV.animate()
-//				.translationX(0)
-//				.translationY(-)
-//				.setDuration(20 * 1000);
-//		propertyAnim.start();
-//	    jump2();
+	    jump2();
 	}
 
 	@Override
@@ -115,8 +108,6 @@ public class LanchActivity extends BaseActivity {
 	    int rate = (int)(event.getRate() * 100);
 	    this.mRateTV.setText(rate + "%");
 	    if(rate == 100){
-//	    	int scrollY = mSV.getScrollY();
-	    	mSV.smoothScrollTo(0, rate * 40);
 	    	jump2Main();
 	    }
 	}
