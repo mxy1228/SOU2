@@ -12,22 +12,27 @@ import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
 import com.xmy.event.SaveAppEvent;
+import com.xmy.handler.IAppDataHandler;
+import com.xmy.presenter.AppDataPresenter;
 import com.xmy.sou.R;
 import com.xmy.sou.db.AppDao;
+import com.xmy.sou.entity.AppInfo;
 import com.xmy.sou.widget.LanchProgressView;
 import com.xmy.sou.widget.StreamView;
 
 import de.greenrobot.event.EventBus;
 
-public class LanchActivity extends BaseActivity {
+public class LanchActivity extends BaseActivity{
 	
-    private AppDao mDao;
+//    private AppDao mDao;
     	
     private TextView mRateTV;
     private RelativeLayout mContainerRL;
 //    private ImageView mIV;
     private ScrollView mSV;
     private StreamView mStreamView;
+    
+    private AppDataPresenter mPresenter;
     
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +48,7 @@ public class LanchActivity extends BaseActivity {
 		@Override
 		public void run() {
 			List<PackageInfo> appList = getPackageManager().getInstalledPackages(0);
-			mDao.saveList(appList);
+			mPresenter.saveList(appList);
 		}
 	});
 	
@@ -66,7 +71,7 @@ public class LanchActivity extends BaseActivity {
 	@SuppressLint("NewApi")
 	@Override
 	protected void initData() {
-	    this.mDao = new AppDao(this);
+	    mPresenter = new AppDataPresenter(new MyDataHandler(), LanchActivity.this);
 	    jump2();
 	}
 
@@ -89,11 +94,7 @@ public class LanchActivity extends BaseActivity {
 	 *
 	 */
 	private void jump2(){
-	    if(mDao.isEmpty()){
-	    	mSaveThread.start();
-	    }else{
-	    	jump2Main();
-	    }
+		mPresenter.isEmpty();
 	}
 	
 	/**
@@ -145,5 +146,29 @@ public class LanchActivity extends BaseActivity {
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+	}
+	
+	/**
+	 * AppData数据操作回调
+	 * @author xumengyang
+	 *
+	 */
+	private class MyDataHandler implements IAppDataHandler{
+
+		@Override
+		public void isEmpty(boolean empty) {
+			 if(empty){
+			    mSaveThread.start();
+			 }else{
+			    jump2Main();
+			 }
+		}
+
+		@Override
+		public void onSearchResult(List<AppInfo> result) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 }

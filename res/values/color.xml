@@ -3,4 +3,6 @@
     <color name="white">#FFFFFF</color>
     <drawable name="item_press">#77FFFFFF</drawable>
     <drawable name="item_normal">#44FFFFFF</drawable>
+    <drawable name="actionbar_normal">#55000000</drawable>
+    <drawable name="actionbar_press">#77000000</drawable>
 </resources>

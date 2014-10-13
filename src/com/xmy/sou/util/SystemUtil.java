@@ -9,6 +9,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
+import android.util.DisplayMetrics;
 
 public class SystemUtil {
 
@@ -49,4 +50,5 @@ public class SystemUtil {
 		}
 		return deviceId.toString();
 	}
+	
 }

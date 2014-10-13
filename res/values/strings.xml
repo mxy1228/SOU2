@@ -6,4 +6,7 @@
     <string name="hello_world">Hello world!</string>
 	<string name="progress">%1$d</string>
 	<string name="scanning_apps">正在扫描APP</string>
+	<string name="suggestiong">意见反馈</string>
+	<string name="check_update">检查更新</string>
+	<string name="about">关于</string>
 </resources>

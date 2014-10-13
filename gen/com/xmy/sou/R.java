@@ -1059,47 +1059,52 @@ containing a value of this type.
         public static final int abs__textfield_searchview_right_holo_dark=0x7f02006d;
         public static final int abs__textfield_searchview_right_holo_light=0x7f02006e;
         public static final int abs__toast_frame=0x7f02006f;
-        public static final int actionbar_xbg=0x7f020070;
-        public static final int back_btn_bg=0x7f020071;
-        public static final int cymg_flow_win_bg_left=0x7f020072;
-        public static final int cymg_flow_win_bg_right=0x7f020073;
-        public static final int cymg_flow_win_btn=0x7f020074;
-        public static final int cymg_flow_win_expand_left=0x7f020075;
-        public static final int cymg_flow_win_expand_right=0x7f020076;
-        public static final int dk_user_name_icon=0x7f020077;
-        public static final int dk_user_psw_icon=0x7f020078;
-        public static final int et_xbg=0x7f020079;
-        public static final int flow_window_bg=0x7f02007a;
-        public static final int flow_window_bg_left=0x7f02007b;
-        public static final int flow_window_pic=0x7f02007c;
-        public static final int ic_launcher=0x7f02007d;
-        public static final int icon=0x7f02007e;
-        public static final int item_normal=0x7f020098;
-        public static final int item_press=0x7f020097;
-        public static final int item_xbg=0x7f02007f;
-        public static final int lanch_scan_tv_xbg=0x7f020080;
-        public static final int main_xbg=0x7f020081;
-        public static final int search_clear_btn_xbg=0x7f020082;
-        public static final int search_clear_normal=0x7f020083;
-        public static final int search_clear_press=0x7f020084;
-        public static final int sky=0x7f020085;
-        public static final int temperatrue_pic=0x7f020086;
-        public static final int unistall_btn_xbg=0x7f020087;
-        public static final int unistall_normal=0x7f020088;
-        public static final int unistall_press=0x7f020089;
-        public static final int waiting_bg=0x7f02008a;
-        public static final int weather_baoyu=0x7f02008b;
-        public static final int weather_cloud=0x7f02008c;
-        public static final int weather_dayu=0x7f02008d;
-        public static final int weather_lei=0x7f02008e;
-        public static final int weather_qing=0x7f02008f;
-        public static final int weather_sha=0x7f020090;
-        public static final int weather_xiaoxue=0x7f020091;
-        public static final int weather_xiaoyu=0x7f020092;
-        public static final int weather_yin=0x7f020093;
-        public static final int weather_yujiaxue=0x7f020094;
-        public static final int weather_zhongxue=0x7f020095;
-        public static final int weather_zhongyu=0x7f020096;
+        public static final int actionbar_click_xbg=0x7f020070;
+        public static final int actionbar_home_btn=0x7f020071;
+        public static final int actionbar_normal=0x7f02009c;
+        public static final int actionbar_press=0x7f02009d;
+        public static final int actionbar_xbg=0x7f020072;
+        public static final int back_btn_bg=0x7f020073;
+        public static final int btn_normal=0x7f020074;
+        public static final int btn_press=0x7f020075;
+        public static final int btn_xbg=0x7f020076;
+        public static final int cymg_flow_win_bg_left=0x7f020077;
+        public static final int cymg_flow_win_bg_right=0x7f020078;
+        public static final int dk_user_name_icon=0x7f020079;
+        public static final int dk_user_psw_icon=0x7f02007a;
+        public static final int et_xbg=0x7f02007b;
+        public static final int flow_window_bg=0x7f02007c;
+        public static final int flow_window_bg_left=0x7f02007d;
+        public static final int ic_launcher=0x7f02007e;
+        public static final int icon=0x7f02007f;
+        public static final int item_normal=0x7f02009b;
+        public static final int item_press=0x7f02009a;
+        public static final int item_xbg=0x7f020080;
+        public static final int lanch_scan_tv_xbg=0x7f020081;
+        public static final int main_xbg=0x7f020082;
+        public static final int search_clear_btn_xbg=0x7f020083;
+        public static final int search_clear_normal=0x7f020084;
+        public static final int search_clear_press=0x7f020085;
+        public static final int sky=0x7f020086;
+        public static final int sliding_memu_btn=0x7f020087;
+        public static final int sliding_memu_btn_press=0x7f020088;
+        public static final int temperatrue_pic=0x7f020089;
+        public static final int unistall_btn_xbg=0x7f02008a;
+        public static final int unistall_normal=0x7f02008b;
+        public static final int unistall_press=0x7f02008c;
+        public static final int waiting_bg=0x7f02008d;
+        public static final int weather_baoyu=0x7f02008e;
+        public static final int weather_cloud=0x7f02008f;
+        public static final int weather_dayu=0x7f020090;
+        public static final int weather_lei=0x7f020091;
+        public static final int weather_qing=0x7f020092;
+        public static final int weather_sha=0x7f020093;
+        public static final int weather_xiaoxue=0x7f020094;
+        public static final int weather_xiaoyu=0x7f020095;
+        public static final int weather_yin=0x7f020096;
+        public static final int weather_yujiaxue=0x7f020097;
+        public static final int weather_zhongxue=0x7f020098;
+        public static final int weather_zhongyu=0x7f020099;
     }
     public static final class id {
         public static final int abs__action_bar=0x7f050026;
@@ -1141,31 +1146,31 @@ containing a value of this type.
         public static final int abs__textButton=0x7f050019;
         public static final int abs__title=0x7f050021;
         public static final int abs__up=0x7f05000b;
-        public static final int action_settings=0x7f05004c;
+        public static final int action_settings=0x7f05004d;
         public static final int actionbar_iv=0x7f050038;
         public static final int actionbar_tv=0x7f050039;
         public static final int app_item_content_ll=0x7f05003a;
         public static final int app_item_icon_iv=0x7f05003b;
         public static final int app_item_name_tv=0x7f05003c;
-        public static final int back_btn=0x7f050040;
+        public static final int back_btn=0x7f05003d;
         public static final int disableHome=0x7f050009;
         public static final int edit_query=0x7f05002c;
-        public static final int flow_window_btn_containr_left=0x7f05003d;
-        public static final int flow_window_btn_containr_right=0x7f05003e;
-        public static final int flow_window_iv=0x7f05003f;
         public static final int fullscreen=0x7f050013;
         public static final int homeAsUp=0x7f050006;
-        public static final int lanch_container=0x7f050041;
-        public static final int lanch_stream_view=0x7f050043;
-        public static final int lanch_sv=0x7f050042;
-        public static final int lanch_tv=0x7f050044;
+        public static final int lanch_container=0x7f05003e;
+        public static final int lanch_stream_view=0x7f050040;
+        public static final int lanch_sv=0x7f05003f;
+        public static final int lanch_tv=0x7f050041;
         public static final int left=0x7f050010;
         public static final int listMode=0x7f050002;
-        public static final int main_clear_ibtn=0x7f050047;
-        public static final int main_et=0x7f050046;
-        public static final int main_lv=0x7f050048;
-        public static final int main_rootview=0x7f050045;
+        public static final int main_clear_ibtn=0x7f050044;
+        public static final int main_et=0x7f050043;
+        public static final int main_lv=0x7f050045;
+        public static final int main_rootview=0x7f050042;
         public static final int margin=0x7f050012;
+        public static final int menu_about_btn=0x7f050049;
+        public static final int menu_checkupdate_btn=0x7f050048;
+        public static final int menu_suggest_btn=0x7f050047;
         public static final int none=0x7f050014;
         public static final int normal=0x7f050001;
         public static final int right=0x7f050011;
@@ -1173,11 +1178,12 @@ containing a value of this type.
         public static final int showCustom=0x7f050008;
         public static final int showHome=0x7f050005;
         public static final int showTitle=0x7f050007;
-        public static final int slidingmenumain=0x7f050049;
+        public static final int sliding_menu_content_ll=0x7f050046;
+        public static final int slidingmenumain=0x7f05004a;
         public static final int tabMode=0x7f050003;
-        public static final int unistall_ibtn=0x7f05004a;
+        public static final int unistall_ibtn=0x7f05004b;
         public static final int useLogo=0x7f050004;
-        public static final int waiting_dialog_tv=0x7f05004b;
+        public static final int waiting_dialog_tv=0x7f05004c;
         public static final int wrap_content=0x7f050000;
     }
     public static final class integer {
@@ -1207,21 +1213,21 @@ containing a value of this type.
         public static final int abs__simple_dropdown_hint=0x7f030014;
         public static final int actionbar=0x7f030015;
         public static final int app_item=0x7f030016;
-        public static final int flow_window=0x7f030017;
-        public static final int header=0x7f030018;
-        public static final int lanch=0x7f030019;
-        public static final int main=0x7f03001a;
-        public static final int sherlock_spinner_dropdown_item=0x7f03001b;
-        public static final int sherlock_spinner_item=0x7f03001c;
-        public static final int sliding_menu=0x7f03001d;
-        public static final int slidingmenumain=0x7f03001e;
-        public static final int unistall_ibtn=0x7f03001f;
-        public static final int waiting_dialog=0x7f030020;
+        public static final int header=0x7f030017;
+        public static final int lanch=0x7f030018;
+        public static final int main=0x7f030019;
+        public static final int sherlock_spinner_dropdown_item=0x7f03001a;
+        public static final int sherlock_spinner_item=0x7f03001b;
+        public static final int sliding_menu=0x7f03001c;
+        public static final int slidingmenumain=0x7f03001d;
+        public static final int unistall_ibtn=0x7f03001e;
+        public static final int waiting_dialog=0x7f03001f;
     }
     public static final class menu {
         public static final int main=0x7f0d0000;
     }
     public static final class string {
+        public static final int about=0x7f0a0014;
         /**  Content description for the action bar "home" affordance. [CHAR LIMIT=NONE] 
          */
         public static final int abs__action_bar_home_description=0x7f0a0000;
@@ -1263,9 +1269,11 @@ containing a value of this type.
         public static final int abs__shareactionprovider_share_with_application=0x7f0a0007;
         public static final int action_settings=0x7f0a000e;
         public static final int app_name=0x7f0a000d;
+        public static final int check_update=0x7f0a0013;
         public static final int hello_world=0x7f0a000f;
         public static final int progress=0x7f0a0010;
         public static final int scanning_apps=0x7f0a0011;
+        public static final int suggestiong=0x7f0a0012;
     }
     public static final class style {
         /** 
@@ -1280,7 +1288,7 @@ containing a value of this type.
     
  API 14 theme customizations can go here. 
          */
-        public static final int AppBaseTheme=0x7f0b005b;
+        public static final int AppBaseTheme=0x7f0b005d;
         public static final int MyActionBar=0x7f0b005a;
         public static final int MyTheme=0x7f0b0059;
         public static final int Sherlock___TextAppearance_Small=0x7f0b0046;
@@ -1372,6 +1380,8 @@ containing a value of this type.
         public static final int Widget_Sherlock_SearchAutoCompleteTextView=0x7f0b0034;
         public static final int Widget_Sherlock_Spinner_DropDown_ActionBar=0x7f0b0024;
         public static final int Widget_Sherlock_TextView_SpinnerItem=0x7f0b0032;
+        public static final int btn=0x7f0b005b;
+        public static final int menu_btn=0x7f0b005c;
     }
     public static final class styleable {
         /**  Attributes used to style the Action Bar. 
@@ -2422,7 +2432,7 @@ containing a value of this type.
          */
         public static final int[] SherlockSpinner = {
             0x010100af, 0x01010175, 0x01010176, 0x0101017b,
-            0x01010262, 0x010102ac, 0x010102ad, 0x010103fd
+            0x01010262, 0x010102ac, 0x010102ad, 0x01010411
         };
         /**
           <p>

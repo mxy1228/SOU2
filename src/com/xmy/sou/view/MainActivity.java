@@ -9,7 +9,11 @@ import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Bitmap.Config;
+import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.drawable.GradientDrawable.Orientation;
 import android.net.Uri;
@@ -18,6 +22,7 @@ import android.text.Editable;
 import android.text.Html;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.util.DisplayMetrics;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -43,6 +48,8 @@ import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
 import com.actionbarsherlock.view.Menu;
+import com.actionbarsherlock.view.MenuItem;
+import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
@@ -69,6 +76,8 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     private ImageButton mClearIBtn;
     private PopupWindow mUnistallPopView;
     private ImageButton mUnistallIBtn;
+    private LinearLayout mSlidingMenuLL;
+    private SlidingMenu mMenu;
     	
     private AppDao mDao;
     private AlphaInAnimationAdapter mAlphaAdapter;
@@ -79,7 +88,9 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     private Animation mShakeAnim;
 //    private int mCurAnimItemIndex = -1;
     private View mCurAnimItemView;//当前显示动画的Item
-    
+    private GradientDrawable mBGDrawable;
+    private int mScreenWidth;
+    private int mScreenHeight;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +105,23 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
+    	return true;
+    }
+    
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+    	switch (item.getItemId()) {
+		case android.R.id.home:
+			if(mMenu.isMenuShowing()){
+				mMenu.showContent();
+			}else{
+				mMenu.showMenu();
+			}
+			break;
+
+		default:
+			break;
+		}
     	return true;
     }
     
@@ -125,6 +153,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 		}
 	}
 
+	@SuppressLint("NewApi")
 	@Override
 	protected void initView() {
 	    this.mListView = (ListView)findViewById(R.id.main_lv);
@@ -140,6 +169,8 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	ctsParams.gravity = Gravity.RIGHT|Gravity.CENTER_VERTICAL;
     	this.mActionBar.setCustomView(actionbarView,ctsParams);
     	this.mActionBar.setDisplayShowCustomEnabled(true);
+    	this.mActionBar.setLogo(R.drawable.actionbar_home_btn);
+    	this.mActionBar.setHomeButtonEnabled(true);
     	this.mInAnim = new AlphaAnimation(0.0f, 1.0f);
     	this.mInAnim.setDuration(500);
     	this.mInAnim.setFillAfter(true);
@@ -151,18 +182,25 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	this.mUnistallIBtn = (ImageButton)unistallView.findViewById(R.id.unistall_ibtn);
     	this.mUnistallIBtn.setOnClickListener(this);
     	this.mUnistallPopView = new PopupWindow(unistallView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, false);
+    	View slidingMenuView = inflater.inflate(R.layout.sliding_menu, null);
+    	this.mSlidingMenuLL = (LinearLayout)slidingMenuView.findViewById(R.id.sliding_menu_content_ll);
+    	initSlidingMenu();
 	}
 	
 	private void initSlidingMenu(){
-		SlidingMenu menu = new SlidingMenu(this);
-		menu.setMode(SlidingMenu.LEFT);
-		menu.setTouchModeAbove(SlidingMenu.LEFT);
+		DisplayMetrics dm = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(dm);
+		mScreenWidth = dm.widthPixels;
+		mScreenHeight = dm.heightPixels;
+		mMenu = new SlidingMenu(this);
+		mMenu.setMode(SlidingMenu.LEFT);
+		mMenu.setTouchModeAbove(SlidingMenu.LEFT);
 //		menu.setShadowWidthRes(resId);设置阴影图片的宽度
 //		menu.setShadowDrawable(resId);设置阴影图片
-//		menu.setBehindOffsetRes(resID);设置划出主页面显示的剩余宽度
-		menu.attachToActivity(this, SlidingMenu.RIGHT, true);
-//		menu.setMenu(res);
-		menu.setOnOpenedListener(new OnOpenedListener() {
+		mMenu.setBehindOffset((mScreenWidth/3)*2);//设置划出主页面显示的剩余宽度
+		mMenu.attachToActivity(this, SlidingMenu.LEFT, true);
+		mMenu.setMenu(R.layout.sliding_menu);
+		mMenu.setOnOpenedListener(new OnOpenedListener() {
 			
 			@Override
 			public void onOpened() {
@@ -270,7 +308,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 			public void onSuccess(WeatherToShowBean t) {
 				setSupportProgressBarIndeterminateVisibility(false);
 				mActionBarTV.setText(t.getTemperature());
-				mActionBar.setIcon(t.getRes());
+//				mActionBar.setIcon(t.getRes());
 				mActionBar.setTitle(Html.fromHtml("<font color=\"white\">"+t.getWeather()+"</font>"));
 			}
 
@@ -284,8 +322,17 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 
 	@Override
 	public void onReceiveRootBG(String fromColor, String toColor) {
-		GradientDrawable d = new GradientDrawable(Orientation.TOP_BOTTOM, new int[]{Color.parseColor(fromColor),Color.parseColor(toColor)});
-		mRootView.setBackgroundDrawable(d);
+		mBGDrawable = new GradientDrawable(Orientation.TOP_BOTTOM, new int[]{Color.parseColor(fromColor),Color.parseColor(toColor)});
+		mRootView.setBackgroundDrawable(mBGDrawable);
+		
+		Bitmap btm = Bitmap.createBitmap(mScreenWidth/3, mScreenHeight, Config.ARGB_8888);
+		Canvas c = new Canvas(btm);
+		mBGDrawable.setBounds(0, 0, c.getWidth(), c.getHeight());
+		mBGDrawable.draw(c);
+//		Bitmap bluredBtm = Blur.fastblur(this, btm, 90);
+//		this.mSlidingMenuLL.setBackgroundDrawable(new BitmapDrawable(bluredBtm));
+//		this.mSlidingMenuLL.setBackgroundDrawable(mBGDrawable);
+		this.mMenu.setBackgroundDrawable(new BitmapDrawable(btm));
 	}
 
 	@Override

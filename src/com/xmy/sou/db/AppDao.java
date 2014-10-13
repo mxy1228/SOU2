@@ -6,6 +6,7 @@ import java.util.List;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -77,12 +78,16 @@ public class AppDao {
 	public void saveOrUpdate(PackageInfo info){
 		SQLiteDatabase database = null;
 		SQLiteStatement stm = null;
+		Cursor c = null;
 		try {
 			database = mDBHelper.getWritableDatabase();
 			String selectSql = "SELECT COUNT(*) FROM "+TABLE_NAME+" WHERE "+PROPERTIES.PACKAGE_NAME+" = ?";
-			stm = database.compileStatement(selectSql);
-			stm.bindString(1, info.packageName);
-			long result = stm.simpleQueryForLong();
+//			stm = database.compileStatement(selectSql);
+//			stm.bindString(1, info.packageName);
+//			long result = stm.simpleQueryForLong();
+			c = database.rawQuery(selectSql, new String[]{info.packageName});
+			c.moveToFirst();
+			long result = c.getInt(0);
 			String name = info.applicationInfo.loadLabel(mContext.getPackageManager()).toString();
 			StringBuilder pinyin = new StringBuilder();
 			StringBuilder sortkey = new StringBuilder();
@@ -107,19 +112,40 @@ public class AppDao {
 			+PROPERTIES.SORT_KEY+" = ? AND "
 			+PROPERTIES.KEY+" = ? "
 			+" WHERE "+PROPERTIES.PACKAGE_NAME+" = ?";
-			stm = result == 0 ? database.compileStatement(insertSql) : database.compileStatement(updateSql);
+			String sql = result == 0? insertSql : updateSql;
+//			stm = result == 0 ? database.compileStatement(insertSql) : database.compileStatement(updateSql);
 			SLog.d("name="+name);
-			stm.bindString(1, name);
-			stm.bindString(2, info.versionName);
-			stm.bindString(3, info.versionCode+"");
-			stm.bindString(4, sortkey.toString());
-			stm.bindString(5, pinyin.toString());
-			stm.bindString(6, info.packageName);
-			stm.execute();
+			database.execSQL(sql, new String[]{name,info.versionName,info.versionCode+"",sortkey.toString(),pinyin.toString(),info.packageName});
+//			stm.bindString(1, name);
+//			stm.bindString(2, info.versionName);
+//			stm.bindString(3, info.versionCode+"");
+//			stm.bindString(4, sortkey.toString());
+//			stm.bindString(5, pinyin.toString());
+//			stm.bindString(6, info.packageName);
+//			stm.execute();
+//			database.execSQL(sql, new String[]{name,info.versionName,info.versionCode+"",sortkey.toString(),pinyin.toString(),info.packageName});
+			
+			
+			
+			
+//			ContentValues values = new ContentValues();
+//			values.put(PROPERTIES.APP_NAME, name);
+//			values.put(PROPERTIES.VERSION_NAME, info.versionName);
+//			values.put(PROPERTIES.VERSION_CODE, info.versionCode);
+//			values.put(PROPERTIES.SORT_KEY, sortkey.toString());
+//			values.put(PROPERTIES.KEY, pinyin.toString());
+//			if(result == 0){
+//				database.insert(TABLE_NAME, null, values);
+//			}else{
+//				database.update(TABLE_NAME, values, PROPERTIES.PACKAGE_NAME+"=?", new String[]{info.packageName});
+//			}
 		} catch (Exception e) {
 			SLog.e(e);
 		}finally{
 			closeSavely(database, null);
+			if(c != null){
+				c.close();
+			}
 		}
 	}
 	
