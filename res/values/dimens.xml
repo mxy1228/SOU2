@@ -13,4 +13,5 @@
 	
 	<dimen name="cymg_flow_win_size">68.0dip</dimen>
 	<dimen name="actionbar_height">50.0dip</dimen>
+	<dimen name="suggesttion_bottom_height">50.0dip</dimen>
 </resources>

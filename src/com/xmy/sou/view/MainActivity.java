@@ -39,6 +39,7 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -49,7 +50,6 @@ import android.widget.TextView.OnEditorActionListener;
 
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
-import com.actionbarsherlock.view.MenuItem.OnMenuItemClickListener;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
@@ -76,7 +76,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     private ImageButton mClearIBtn;
     private PopupWindow mUnistallPopView;
     private ImageButton mUnistallIBtn;
-    private LinearLayout mSlidingMenuLL;
+    private Button mSuggestionBtn;
     private SlidingMenu mMenu;
     	
     private AppDao mDao;
@@ -182,8 +182,6 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	this.mUnistallIBtn = (ImageButton)unistallView.findViewById(R.id.unistall_ibtn);
     	this.mUnistallIBtn.setOnClickListener(this);
     	this.mUnistallPopView = new PopupWindow(unistallView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, false);
-    	View slidingMenuView = inflater.inflate(R.layout.sliding_menu, null);
-    	this.mSlidingMenuLL = (LinearLayout)slidingMenuView.findViewById(R.id.sliding_menu_content_ll);
     	initSlidingMenu();
 	}
 	
@@ -199,13 +197,22 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 //		menu.setShadowDrawable(resId);设置阴影图片
 		mMenu.setBehindOffset((mScreenWidth/3)*2);//设置划出主页面显示的剩余宽度
 		mMenu.attachToActivity(this, SlidingMenu.LEFT, true);
-		mMenu.setMenu(R.layout.sliding_menu);
 		mMenu.setOnOpenedListener(new OnOpenedListener() {
 			
 			@Override
 			public void onOpened() {
 				// TODO Auto-generated method stub
 				
+			}
+		});
+		mMenu.setMenu(R.layout.sliding_menu);
+		mSuggestionBtn = (Button)mMenu.getMenu().findViewById(R.id.menu_suggest_btn);
+		mSuggestionBtn.setOnClickListener(new OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent iSuggestion = new Intent(MainActivity.this,SuggesttionActivity.class);
+				startActivity(iSuggestion);
 			}
 		});
 	}
@@ -227,6 +234,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 
 	@Override
 	protected void initEvent() {
+//		this.mSuggestionBtn.setOnClickListener(this);
 		this.mUnistallIBtn.setOnClickListener(this);
 		this.mListView.setOnItemClickListener(this);
 		this.mListView.setOnItemLongClickListener(this);
@@ -288,6 +296,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 				clearListViewItemAnimation();
 			}
 		});
+    	
 	}
 
 	/**
@@ -349,6 +358,11 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 				Intent intent = new Intent(Intent.ACTION_DELETE, packageUri);
 				startActivity(intent);
 			}
+			break;
+		//建议
+		case R.id.menu_suggest_btn:
+			Intent iSuggestion = new Intent(MainActivity.this,SuggesttionActivity.class);
+			startActivity(iSuggestion);
 			break;
 		default:
 			break;

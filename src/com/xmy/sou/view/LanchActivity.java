@@ -11,11 +11,11 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
+import com.umeng.update.UmengUpdateAgent;
 import com.xmy.event.SaveAppEvent;
 import com.xmy.handler.IAppDataHandler;
 import com.xmy.presenter.AppDataPresenter;
 import com.xmy.sou.R;
-import com.xmy.sou.db.AppDao;
 import com.xmy.sou.entity.AppInfo;
 import com.xmy.sou.widget.LanchProgressView;
 import com.xmy.sou.widget.StreamView;
@@ -71,6 +71,7 @@ public class LanchActivity extends BaseActivity{
 	@SuppressLint("NewApi")
 	@Override
 	protected void initData() {
+		checkUpdate();
 	    mPresenter = new AppDataPresenter(new MyDataHandler(), LanchActivity.this);
 	    jump2();
 	}
@@ -83,6 +84,13 @@ public class LanchActivity extends BaseActivity{
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		return false;
+	}
+	
+	/**
+	 * 通过友盟自动更新功能检查是否有最新版本
+	 */
+	private void checkUpdate(){
+		UmengUpdateAgent.update(this);
 	}
 	
 	/**
