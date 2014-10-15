@@ -6,55 +6,14 @@
     android:background="#303030"
     android:orientation="vertical" >
     
-    <LinearLayout 
+    <ListView 
+        android:id="@+id/sliding_menu_lv"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="5.0dip"
-        android:orientation="vertical">
-        
-        <Button
-	        android:id="@+id/menu_suggest_btn"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/suggestiong"
-	        android:background="#303030"
-	        android:textColor="#FFFFFF"/>
-	    
-	    <View
-	        android:layout_width="match_parent"
-	        android:layout_height="1dip"
-	        android:background="#1f1f1f"/>
-	    
-	    <Button 
-	        android:id="@+id/menu_checkupdate_btn"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/check_update"
-	        android:layout_marginTop="5.0dip"
-	        android:background="#303030"
-	        android:textColor="#FFFFFF"/>
-	    
-	    <View
-	        android:layout_width="match_parent"
-	        android:layout_height="1dip"
-	        android:background="#1f1f1f"/>
-	    
-	    <Button
-	        android:id="@+id/menu_about_btn"
-	        android:layout_width="match_parent"
-	        android:layout_height="wrap_content"
-	        android:text="@string/about"
-	        android:layout_marginTop="5.0dip"
-	        android:background="#303030"
-	        android:textColor="#FFFFFF"/>
-	    
-	    <View
-	        android:layout_width="match_parent"
-	        android:layout_height="1dip"
-	        android:background="#1f1f1f"/>
-        
-    </LinearLayout>
-    
+        android:layout_height="match_parent"
+        android:divider="@null"
+        android:dividerHeight="0dip"
+        android:layout_margin="5.0dip"
+        android:scrollbars="none"></ListView>
     
     
     <TextView
@@ -63,6 +22,9 @@
         android:layout_height="@dimen/suggesttion_bottom_height"
         android:layout_alignParentBottom="true"
         android:layout_gravity="bottom"
+        android:gravity="center"
+        android:textSize="14sp"
+        android:textColor="#DBDBDB"
         android:background="#383938"/>
 
 </RelativeLayout>

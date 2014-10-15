@@ -35,4 +35,10 @@
         <item>#000000</item>
         <item >#00688B</item>
     </string-array>
+    
+    <string-array name="sliding_menu_actions">
+        <item>意见反馈#com.xmy.sou.view.SuggesttionActivity</item>
+        <item>检查更新#</item>
+        <item>关于#</item>
+    </string-array>
 </resources>

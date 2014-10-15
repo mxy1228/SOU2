@@ -8,6 +8,7 @@ import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Bitmap.Config;
@@ -39,7 +40,6 @@ import android.widget.AbsListView.OnScrollListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
@@ -60,9 +60,11 @@ import com.xmy.presenter.MainPresenter;
 import com.xmy.sou.R;
 import com.xmy.sou.db.AppDao;
 import com.xmy.sou.entity.AppInfo;
+import com.xmy.sou.entity.SlidingMenuItem;
 import com.xmy.sou.http.MyHttpRequest;
 import com.xmy.sou.log.SLog;
 import com.xmy.sou.view.adapter.AppListAdapter;
+import com.xmy.sou.view.adapter.SlidingMenuAdapter;
 
 import de.greenrobot.event.EventBus;
 
@@ -76,8 +78,10 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     private ImageButton mClearIBtn;
     private PopupWindow mUnistallPopView;
     private ImageButton mUnistallIBtn;
-    private Button mSuggestionBtn;
+//    private Button mSuggestionBtn;
     private SlidingMenu mMenu;
+    private ListView mSlidingMenuLV;
+    private TextView mVersionTV;
     	
     private AppDao mDao;
     private AlphaInAnimationAdapter mAlphaAdapter;
@@ -195,7 +199,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 		mMenu.setTouchModeAbove(SlidingMenu.LEFT);
 //		menu.setShadowWidthRes(resId);设置阴影图片的宽度
 //		menu.setShadowDrawable(resId);设置阴影图片
-		mMenu.setBehindOffset((mScreenWidth/3)*2);//设置划出主页面显示的剩余宽度
+		mMenu.setBehindOffset((mScreenWidth/5)*3);//设置划出主页面显示的剩余宽度
 		mMenu.attachToActivity(this, SlidingMenu.LEFT, true);
 		mMenu.setOnOpenedListener(new OnOpenedListener() {
 			
@@ -206,15 +210,17 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 			}
 		});
 		mMenu.setMenu(R.layout.sliding_menu);
-		mSuggestionBtn = (Button)mMenu.getMenu().findViewById(R.id.menu_suggest_btn);
-		mSuggestionBtn.setOnClickListener(new OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				Intent iSuggestion = new Intent(MainActivity.this,SuggesttionActivity.class);
-				startActivity(iSuggestion);
-			}
-		});
+		this.mSlidingMenuLV = (ListView)mMenu.getMenu().findViewById(R.id.sliding_menu_lv);
+		try {
+			//获取版本号
+			PackageManager pm = getPackageManager();
+			PackageInfo info = pm.getPackageInfo(getPackageName(), 0);
+			this.mVersionTV = (TextView)mMenu.getMenu().findViewById(R.id.menu_version_tv);
+			this.mVersionTV.setText(getString(R.string.version, info.versionName));
+		} catch (Exception e) {
+			SLog.e(e);
+		}
+		
 	}
 
 	@Override
@@ -229,12 +235,13 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	}
     	mListView.setAdapter(mAlphaAdapter);
     	mPresenter = new MainPresenter(this);
+    	this.mPresenter.initSlidingMenuData(getResources().getStringArray(R.array.sliding_menu_actions));
     	EventBus.getDefault().register(this);
 	}
 
 	@Override
 	protected void initEvent() {
-//		this.mSuggestionBtn.setOnClickListener(this);
+		this.mSlidingMenuLV.setOnItemClickListener(new SlidingMenuLVItemClick());
 		this.mUnistallIBtn.setOnClickListener(this);
 		this.mListView.setOnItemClickListener(this);
 		this.mListView.setOnItemLongClickListener(this);
@@ -338,9 +345,6 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 		Canvas c = new Canvas(btm);
 		mBGDrawable.setBounds(0, 0, c.getWidth(), c.getHeight());
 		mBGDrawable.draw(c);
-//		Bitmap bluredBtm = Blur.fastblur(this, btm, 90);
-//		this.mSlidingMenuLL.setBackgroundDrawable(new BitmapDrawable(bluredBtm));
-//		this.mSlidingMenuLL.setBackgroundDrawable(mBGDrawable);
 		this.mMenu.setBackgroundDrawable(new BitmapDrawable(btm));
 	}
 
@@ -359,22 +363,19 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 				startActivity(intent);
 			}
 			break;
-		//建议
-		case R.id.menu_suggest_btn:
-			Intent iSuggestion = new Intent(MainActivity.this,SuggesttionActivity.class);
-			startActivity(iSuggestion);
-			break;
 		default:
 			break;
 		}
 	}
 
+	/**
+	 * APP列表Item点击
+	 */
 	@Override
 	public boolean onItemLongClick(AdapterView<?> parent, View view,
 			int position, long id) {
 		//长按删除
 		AppInfo info = (AppInfo)mListView.getItemAtPosition(position);
-//		int isSystemApp = Settings.Secure.getInt(getContentResolver(), Settings.Secure.INSTALL_NON_MARKET_APPS,0);
 		if(info != null){
 			mCurAnimItemView = view;
 			view.startAnimation(mShakeAnim);
@@ -384,6 +385,25 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 			mUnistallIBtn.setTag(info.getPackageName());
 		}
 		return true;
+	}
+	
+	/**
+	 * SlidingMenu LsitView Item点击
+	 * @author xumengyang
+	 *
+	 */
+	private class SlidingMenuLVItemClick implements OnItemClickListener{
+
+		@Override
+		public void onItemClick(AdapterView<?> parent, View view, int position,
+				long id) {
+			SlidingMenuItem item = (SlidingMenuItem)mSlidingMenuLV.getAdapter().getItem(position);
+			if(item.getmAction() != null && !TextUtils.isEmpty(item.getmAction())){
+				Intent intent = new Intent(item.getmAction());
+				startActivity(intent);
+			}
+		}
+		
 	}
 	
 	/**
@@ -409,5 +429,10 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 			}
 		}
 		mAlphaAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void onLoadSlidingMenuData(List<SlidingMenuItem> list) {
+		this.mSlidingMenuLV.setAdapter(new SlidingMenuAdapter(this, list));
 	}
 }

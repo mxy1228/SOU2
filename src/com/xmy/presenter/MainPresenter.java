@@ -1,5 +1,8 @@
 package com.xmy.presenter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.text.format.Time;
 
@@ -10,6 +13,7 @@ import com.baidu.location.LocationClientOption;
 import com.baidu.location.LocationClientOption.LocationMode;
 import com.xmy.handler.IMainHandler;
 import com.xmy.sou.R;
+import com.xmy.sou.entity.SlidingMenuItem;
 import com.xmy.sou.log.SLog;
 
 public class MainPresenter {
@@ -80,4 +84,24 @@ public class MainPresenter {
 	public void startCheckService(Context ctx){
 		
 	}
+	
+	/**
+	 * 装载SlidingMenu的数据
+	 */
+	public void initSlidingMenuData(String[] arrays){
+		List<SlidingMenuItem> data = new ArrayList<SlidingMenuItem>();
+		for(int i=0;i<arrays.length;i++){
+			//slipt后props中的内容为：
+			//[0] 按钮标题
+			//[1] 点击后要执行的Action
+			String[] props = arrays[i].split("#");
+			SlidingMenuItem item = new SlidingMenuItem();
+			item.setmTitle(props[0]);
+			item.setmAction(props.length==1?"":props[1]);
+			data.add(item);
+		}
+		mIMainActivity.onLoadSlidingMenuData(data);
+	}
+	
+	
 }
