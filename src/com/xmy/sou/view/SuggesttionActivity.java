@@ -3,15 +3,6 @@ package com.xmy.sou.view;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.umeng.fb.model.Conversation;
-import com.umeng.fb.model.Conversation.SyncListener;
-import com.umeng.fb.model.DevReply;
-import com.umeng.fb.model.Reply;
-import com.xmy.handler.ISuggestionHandler;
-import com.xmy.presenter.SuggestionPresenter;
-import com.xmy.sou.R;
-import com.xmy.sou.view.adapter.SuggestionAdapter;
-
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -20,11 +11,20 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 
+import com.actionbarsherlock.view.MenuItem;
+import com.umeng.fb.model.Reply;
+import com.xmy.handler.ISuggestionHandler;
+import com.xmy.presenter.SuggestionPresenter;
+import com.xmy.sou.R;
+import com.xmy.sou.view.adapter.SuggestionAdapter;
+import com.xmy.sou.widget.WaitingDialog;
+
 public class SuggesttionActivity extends BaseActivity implements OnClickListener,ISuggestionHandler{
 
 	private ListView mLV;
 	private EditText mET;
 	private Button mSendBtn;
+	private WaitingDialog mWaitingDialog;
 	
 	private List<Reply> mData;
 	private SuggestionPresenter mPresenter;
@@ -44,6 +44,8 @@ public class SuggesttionActivity extends BaseActivity implements OnClickListener
 		this.mLV = (ListView)findViewById(R.id.suggestion_lv);
 		this.mET = (EditText)findViewById(R.id.suggestion_et);
 		this.mSendBtn = (Button)findViewById(R.id.suggestion_btn);
+		this.mWaitingDialog = new WaitingDialog(this);
+		getSupportActionBar().setHomeButtonEnabled(true);
 	}
 
 	@Override
@@ -52,8 +54,19 @@ public class SuggesttionActivity extends BaseActivity implements OnClickListener
 		this.mPresenter = new SuggestionPresenter(this, SuggesttionActivity.this);
 		this.mAdapter = new SuggestionAdapter(SuggesttionActivity.this, mData);
 		this.mLV.setAdapter(mAdapter);
-		//同步建议列表
-		this.mPresenter.sync();
+	}
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case android.R.id.home:
+			SuggesttionActivity.this.finish();
+			break;
+
+		default:
+			break;
+		}
+		return true;
 	}
 
 	@Override
@@ -87,6 +100,10 @@ public class SuggesttionActivity extends BaseActivity implements OnClickListener
 		this.mData.clear();
 		this.mData.addAll(list);
 		this.mAdapter.notifyDataSetChanged();
+		this.mET.setText("");
+		showShortTaost(R.string.thx_feedback);
+		//隐藏软键盘
+		hideSoftInput();
 	}
 
 	@Override
@@ -101,6 +118,20 @@ public class SuggesttionActivity extends BaseActivity implements OnClickListener
 		mData.clear();
 		mData.addAll(list);
 		this.mAdapter.notifyDataSetChanged();
+	}
+
+	@Override
+	public void showWaitingDialog() {
+		if(!this.isFinishing()){
+			this.mWaitingDialog.show();
+		}
+	}
+
+	@Override
+	public void dissmisWaitingDialog() {
+		if(!this.isFinishing()){
+			this.mWaitingDialog.dismiss();
+		}
 	}
 
 }

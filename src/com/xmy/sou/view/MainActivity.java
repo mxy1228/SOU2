@@ -48,6 +48,8 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
+import cn.domob.android.ads.AdView;
+
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -82,6 +84,8 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     private SlidingMenu mMenu;
     private ListView mSlidingMenuLV;
     private TextView mVersionTV;
+    private LinearLayout mADContainerLL;
+    private AdView mADView;//多盟广告
     	
     private AppDao mDao;
     private AlphaInAnimationAdapter mAlphaAdapter;
@@ -186,6 +190,9 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	this.mUnistallIBtn = (ImageButton)unistallView.findViewById(R.id.unistall_ibtn);
     	this.mUnistallIBtn.setOnClickListener(this);
     	this.mUnistallPopView = new PopupWindow(unistallView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, false);
+    	this.mADContainerLL = (LinearLayout)findViewById(R.id.main_ad_container);
+    	this.mADView = new AdView(this, "56OJx4wouN/oG0FOxd", "16TLe3WvAp6k1NUOINjPzA0i");
+    	this.mADContainerLL.addView(mADView);
     	initSlidingMenu();
 	}
 	

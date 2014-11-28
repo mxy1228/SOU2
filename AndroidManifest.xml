@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.xmy.sou"
-    android:versionCode="1"
-    android:versionName="1.0" >
+    android:versionCode="11"
+    android:versionName="0.1.1" >
 
     <uses-sdk
         android:minSdkVersion="11"
@@ -15,12 +15,16 @@
         android:label="@string/app_name"
         android:hardwareAccelerated="false"
         android:theme="@android:style/Theme.Holo.Light" >
+        
+        <!-- 主页 -->
         <activity
             android:name="com.xmy.sou.view.MainActivity"
             android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"
             android:theme="@style/MyTheme">
         </activity>
+        
+        <!-- 扫描加载页 -->
         <activity android:name=".view.LanchActivity"
             android:theme="@android:style/Theme.Light.NoTitleBar.Fullscreen"
             android:screenOrientation="portrait">
@@ -31,7 +35,8 @@
             </intent-filter>
         </activity>
         <service android:name=".service.XiaomiCloudSyncService"></service>
-          
+        
+        <!-- 监听安装 -->
         <receiver android:name=".receiver.AppInstallReceiver">
             <intent-filter >
                 <action android:name="android.intent.action.PACKAGE_ADDED"/>
@@ -40,6 +45,7 @@
             </intent-filter>
         </receiver>
         
+        <!-- 监听卸载 -->
         <receiver android:name=".receiver.AppUnistallReceiver">
             <intent-filter >
                 <action android:name="android.intent.action.PACKAGE_REMOVED"/>
@@ -49,9 +55,23 @@
         <service android:name=".service.DetectAppLanchService"
             android:process=":detect"></service>
         <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"></service>
-        <activity android:name=".view.SuggesttionActivity">
+        
+        <!-- 意见反馈 -->
+        <activity android:name=".view.SuggesttionActivity"
+            android:theme="@style/MyNormalTheme"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="com.xmy.sou.view.SuggesttionActivity"/>
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        
+        <!-- 关于 -->
+        <activity android:name=".view.AboutActivity"
+            android:theme="@style/MyNormalTheme"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.xmy.sou.view.AboutActivity"/>
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
@@ -73,6 +93,10 @@
         <activity android:name="com.umeng.fb.ContactActivity"
          android:theme="@android:style/Theme.NoTitleBar"/>
         <!-- 友盟意见反馈 -->
+        
+        <!-- 多盟 -->
+        <activity android:name="cn.domob.android.ads.DmActivity"
+			android:theme="@android:style/Theme.Translucent"></activity>
         
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"

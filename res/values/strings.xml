@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Sou</string>
+    <string name="app_name">APP在哪</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
 	<string name="progress">%1$d</string>
@@ -11,4 +11,8 @@
 	<string name="about">关于</string>
 	<string name="submmit">提交</string>
 	<string name="version">版本：%1$s</string>
+	<string name="thx_feedback">非常感谢，您的反馈我已收到。:)</string>
+	<string name="about_hint1">这个APP断断续续开发了三个月，因为各种原因，曾一度想永久搁置。离职搜狐畅游工作交接之余，得空才将α版本开发完。</string>
+	<string name="about_hint2">希望大家多提建议:)</string>
+	<string name="about_hint3">个人博客：www.baidu.com</string>
 </resources>

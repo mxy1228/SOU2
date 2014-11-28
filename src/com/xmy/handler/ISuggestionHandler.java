@@ -29,4 +29,8 @@ public interface ISuggestionHandler {
 	 * @param list
 	 */
 	public void onInitReplyList(List<Reply> list);
+	
+	public void showWaitingDialog();
+	
+	public void dissmisWaitingDialog();
 }

@@ -54,11 +54,12 @@ public class SuggestionAdapter extends BaseAdapter {
 		if(reply instanceof DevReply){
 			cache.getmDevTV().setVisibility(View.VISIBLE);
 			cache.getmUserTV().setVisibility(View.GONE);
+			cache.getmDevTV().setText(reply.getContent());
 		}else{
 			cache.getmDevTV().setVisibility(View.GONE);
 			cache.getmUserTV().setVisibility(View.VISIBLE);
+			cache.getmUserTV().setText(reply.getContent());
 		}
-		cache.getmDevTV().setText(reply.getContent());
 		return convertView;
 	}
 
