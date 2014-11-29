@@ -1,14 +1,13 @@
 package com.xmy.sou.view;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
-import android.hardware.input.InputManager;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
 import com.actionbarsherlock.app.SherlockFragmentActivity;
+import com.testin.agent.TestinAgent;
 import com.umeng.analytics.MobclickAgent;
 
 
@@ -65,5 +64,17 @@ public abstract class BaseActivity extends SherlockFragmentActivity{
     	super.onPause();
     	//友盟统计
     	MobclickAgent.onPause(this);
+    }
+    
+    @Override
+    protected void onStart() {
+    	super.onStart();
+    	TestinAgent.onStart(this);
+    }
+    
+    @Override
+    protected void onStop() {
+    	super.onStop();
+    	TestinAgent.onStop(this);
     }
 }

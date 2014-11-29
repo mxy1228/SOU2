@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+import net.youmi.android.banner.AdSize;
+import net.youmi.android.banner.AdView;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
@@ -48,8 +50,6 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
-import cn.domob.android.ads.AdView;
-
 import com.actionbarsherlock.view.Menu;
 import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
@@ -85,7 +85,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     private ListView mSlidingMenuLV;
     private TextView mVersionTV;
     private LinearLayout mADContainerLL;
-    private AdView mADView;//多盟广告
+    private AdView mADView;//有米广告
     	
     private AppDao mDao;
     private AlphaInAnimationAdapter mAlphaAdapter;
@@ -191,7 +191,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	this.mUnistallIBtn.setOnClickListener(this);
     	this.mUnistallPopView = new PopupWindow(unistallView, LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT, false);
     	this.mADContainerLL = (LinearLayout)findViewById(R.id.main_ad_container);
-    	this.mADView = new AdView(this, "56OJx4wouN/oG0FOxd", "16TLe3WvAp6k1NUOINjPzA0i");
+    	this.mADView = new AdView(this, AdSize.FIT_SCREEN);
     	this.mADContainerLL.addView(mADView);
     	initSlidingMenu();
 	}

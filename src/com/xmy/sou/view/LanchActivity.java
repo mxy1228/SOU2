@@ -2,6 +2,8 @@ package com.xmy.sou.view;
 
 import java.util.List;
 
+import net.youmi.android.AdManager;
+
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
@@ -11,6 +13,7 @@ import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.actionbarsherlock.view.Menu;
+import com.testin.agent.TestinAgent;
 import com.umeng.update.UmengUpdateAgent;
 import com.xmy.event.SaveAppEvent;
 import com.xmy.handler.IAppDataHandler;
@@ -71,6 +74,10 @@ public class LanchActivity extends BaseActivity{
 	@SuppressLint("NewApi")
 	@Override
 	protected void initData() {
+		//初始化多米
+	    AdManager.getInstance(this).init("364f2c0ed067aae7", "b5db7cd7e5a3c617", false);
+	    //初始化云测
+	    TestinAgent.init(this, "9a0392c0f997791c591ea43e8bc6c649");
 		checkUpdate();
 	    mPresenter = new AppDataPresenter(new MyDataHandler(), LanchActivity.this);
 	    jump2();
