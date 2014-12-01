@@ -1,5 +1,7 @@
 package com.xmy.sou.view;
 
+import net.youmi.android.AdManager;
+import net.youmi.android.onlineconfig.OnlineConfigCallBack;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
@@ -9,13 +11,14 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.testin.agent.TestinAgent;
 import com.umeng.analytics.MobclickAgent;
+import com.xmy.sou.SouApplication;
+import com.xmy.sou.log.SLog;
 
 
 public abstract class BaseActivity extends SherlockFragmentActivity{
 	
 	@Override
 	protected void onCreate(Bundle arg0) {
-		// TODO Auto-generated method stub
 		super.onCreate(arg0);
 	}
     
@@ -57,6 +60,29 @@ public abstract class BaseActivity extends SherlockFragmentActivity{
     	super.onResume();
     	//友盟统计
     	MobclickAgent.onResume(this);
+    	AdManager.getInstance(this).asyncGetOnlineConfig("isShowAD", new OnlineConfigCallBack() {
+			
+			@Override
+			public void onGetOnlineConfigSuccessful(String key, String value) {
+				if(key.equals("isShowAD")){
+					if(value.equals("1")){
+						//显示广告
+						SouApplication.isShowAD = true;
+						SLog.v("show AD");
+					}else{
+						//隐藏广告
+						SouApplication.isShowAD = false;
+						SLog.v("hide AD");
+					}
+				}
+			}
+			
+			@Override
+			public void onGetOnlineConfigFailed(String arg0) {
+				// TODO Auto-generated method stub
+				
+			}
+		});
     }
     
     @Override

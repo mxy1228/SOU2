@@ -3,6 +3,7 @@ package com.xmy.sou.view;
 import java.util.List;
 
 import net.youmi.android.AdManager;
+import net.youmi.android.spot.SpotManager;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -27,11 +28,9 @@ import de.greenrobot.event.EventBus;
 
 public class LanchActivity extends BaseActivity{
 	
-//    private AppDao mDao;
     	
     private TextView mRateTV;
     private RelativeLayout mContainerRL;
-//    private ImageView mIV;
     private ScrollView mSV;
     private StreamView mStreamView;
     
@@ -76,6 +75,10 @@ public class LanchActivity extends BaseActivity{
 	protected void initData() {
 		//初始化多米
 	    AdManager.getInstance(this).init("364f2c0ed067aae7", "b5db7cd7e5a3c617", false);
+	    //异步加载多米插屏广告
+	    SpotManager.getInstance(this).loadSpotAds();
+	    //设置多米插屏广告竖向显示
+	    SpotManager.getInstance(this).setSpotOrientation(SpotManager.ORIENTATION_PORTRAIT);
 	    //初始化云测
 	    TestinAgent.init(this, "9a0392c0f997791c591ea43e8bc6c649");
 		checkUpdate();

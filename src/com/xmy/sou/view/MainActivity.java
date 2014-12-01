@@ -6,6 +6,7 @@ import java.util.List;
 
 import net.youmi.android.banner.AdSize;
 import net.youmi.android.banner.AdView;
+import net.youmi.android.spot.SpotManager;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
@@ -60,6 +61,7 @@ import com.xmy.event.UnistallAppEvent;
 import com.xmy.handler.IMainHandler;
 import com.xmy.presenter.MainPresenter;
 import com.xmy.sou.R;
+import com.xmy.sou.SouApplication;
 import com.xmy.sou.db.AppDao;
 import com.xmy.sou.entity.AppInfo;
 import com.xmy.sou.entity.SlidingMenuItem;
@@ -99,6 +101,7 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     private GradientDrawable mBGDrawable;
     private int mScreenWidth;
     private int mScreenHeight;
+    private boolean mFirstOnResume = true;//如果是第一次打开则不显示多米插屏广告
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -140,7 +143,27 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	mPresenter.requstLocate(getApplicationContext());
     	mPresenter.requestRootViewBG(this);
     	setSupportProgressBarIndeterminateVisibility(true);
+    	if(SouApplication.isShowAD){
+    		//显示Banner广告	
+    		mADContainerLL.setVisibility(View.VISIBLE);
+    		//显示插屏广告
+    		if(mFirstOnResume){
+        		mFirstOnResume = false;
+        	}else{
+        		SpotManager.getInstance(this).showSpotAds(this);
+        	}
+    	}else{
+    		//隐藏广告
+    		mADContainerLL.setVisibility(View.GONE);
+    	}
     }
+	
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		//退出APP时注销多米广播
+		SpotManager.getInstance(this).unregisterSceenReceiver();
+	}
 
 
 	@Override
@@ -441,5 +464,11 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 	@Override
 	public void onLoadSlidingMenuData(List<SlidingMenuItem> list) {
 		this.mSlidingMenuLV.setAdapter(new SlidingMenuAdapter(this, list));
+	}
+	
+	@Override
+	public void onBackPressed() {
+		super.onBackPressed();
+		
 	}
 }
