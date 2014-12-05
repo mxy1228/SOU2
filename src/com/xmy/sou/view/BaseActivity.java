@@ -11,8 +11,11 @@ import android.widget.Toast;
 import com.actionbarsherlock.app.SherlockFragmentActivity;
 import com.testin.agent.TestinAgent;
 import com.umeng.analytics.MobclickAgent;
+import com.xmy.bean.ADBean;
 import com.xmy.sou.SouApplication;
 import com.xmy.sou.log.SLog;
+
+import de.greenrobot.event.EventBus;
 
 
 public abstract class BaseActivity extends SherlockFragmentActivity{
@@ -65,15 +68,19 @@ public abstract class BaseActivity extends SherlockFragmentActivity{
 			@Override
 			public void onGetOnlineConfigSuccessful(String key, String value) {
 				if(key.equals("isShowAD")){
+					ADBean bean = new ADBean();
 					if(value.equals("1")){
 						//显示广告
 						SouApplication.isShowAD = true;
 						SLog.v("show AD");
+						bean.isShowAD = true;
 					}else{
 						//隐藏广告
+						bean.isShowAD = false;
 						SouApplication.isShowAD = false;
 						SLog.v("hide AD");
 					}
+					EventBus.getDefault().post(bean);
 				}
 			}
 			

@@ -56,6 +56,7 @@ import com.actionbarsherlock.view.MenuItem;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu;
 import com.jeremyfeinstein.slidingmenu.lib.SlidingMenu.OnOpenedListener;
 import com.nhaarman.listviewanimations.appearance.simple.AlphaInAnimationAdapter;
+import com.xmy.bean.ADBean;
 import com.xmy.bean.WeatherToShowBean;
 import com.xmy.event.UnistallAppEvent;
 import com.xmy.handler.IMainHandler;
@@ -144,8 +145,6 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
     	mPresenter.requestRootViewBG(this);
     	setSupportProgressBarIndeterminateVisibility(true);
     	if(SouApplication.isShowAD){
-    		//显示Banner广告	
-    		mADContainerLL.setVisibility(View.VISIBLE);
     		//显示插屏广告
     		if(mFirstOnResume){
         		mFirstOnResume = false;
@@ -153,8 +152,8 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
         		SpotManager.getInstance(this).showSpotAds(this);
         	}
     	}else{
-    		//隐藏广告
-    		mADContainerLL.setVisibility(View.GONE);
+//    		//隐藏广告
+//    		mADContainerLL.setVisibility(View.GONE);
     	}
     }
 	
@@ -460,7 +459,15 @@ public class MainActivity extends BaseActivity implements OnEditorActionListener
 		}
 		mAlphaAdapter.notifyDataSetChanged();
 	}
-
+	
+	public void onEventMainThread(ADBean bean){
+		if(bean.isShowAD){
+			mADContainerLL.setVisibility(View.VISIBLE);
+		}else{
+			mADContainerLL.setVisibility(View.GONE);
+		}
+	}
+	
 	@Override
 	public void onLoadSlidingMenuData(List<SlidingMenuItem> list) {
 		this.mSlidingMenuLV.setAdapter(new SlidingMenuAdapter(this, list));
